@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>生命感知</title>
+  <desc>人员轮廓、毫米波感知与心电波形组合图标</desc>
+  <defs>
+    <linearGradient id="life" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5FD8FF"/>
+      <stop offset="1" stop-color="#966BFF"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#life)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="13" r="6"/>
+    <path d="M22 55c1-11 3-18 5-23l5 6 5-6c2 5 4 12 5 23"/>
+    <path d="m27 24-8 9-7 2M37 24l8 9 7 2"/>
+    <path d="M7 43h12l3.5-6 6.3 13L35 39l4.5 7H57"/>
+    <path d="M47 12c3 2.3 3 7.7 0 10M52 8c6 5 6 13 0 18" opacity=".75"/>
+  </g>
+</svg>

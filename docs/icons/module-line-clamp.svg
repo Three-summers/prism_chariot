@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>线卡识别</title>
+  <desc>带扫描定位框的轨道线卡轮廓</desc>
+  <g stroke="#27B7FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 21v-7a6 6 0 0 1 6-6h7M43 8h7a6 6 0 0 1 6 6v7M56 43v7a6 6 0 0 1-6 6h-7M21 56h-7a6 6 0 0 1-6-6v-7" opacity=".92"/>
+    <path d="M14 24h36"/>
+    <path d="M21 24v8c0 8 4.4 13 11 13s11-5 11-13v-8"/>
+    <path d="M26 24v7.5c0 4.6 2.2 7.2 6 7.2s6-2.6 6-7.2V24" opacity=".62"/>
+    <path d="M18 20h8M38 20h8"/>
+  </g>
+  <circle cx="32" cy="24" r="3" fill="#27B7FF"/>
+</svg>

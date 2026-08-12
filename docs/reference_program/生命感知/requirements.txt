@@ -1,0 +1,6 @@
+PySide6>=6.8
+pyopengl>=3.1.7
+numpy>=2.0
+pyserial>=3.5
+pyqtgraph>=0.13.7
+json-fix>=0.5.0

@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vite/
+*.local
+.DS_Store
+*.log
+
+# Python reference environments and generated files
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/.env
+**/cache/
+**/dist/
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts

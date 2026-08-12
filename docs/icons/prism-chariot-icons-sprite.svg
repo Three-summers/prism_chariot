@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-prism-logo" viewBox="0 0 64 64" fill="none">
+    <path d="M3 28.5H21" stroke="#E8FCFF" stroke-width="2.4" stroke-linecap="round"/><path d="M25 6.5 10.8 50.5h30.5L25 6.5Z" fill="#2176FF" fill-opacity=".08" stroke="#72DFFF" stroke-width="2.2" stroke-linejoin="round"/><path d="M25 6.5 25.8 50.5M10.8 50.5l22.1-22.1M41.3 50.5 20.4 28.4h12.5" stroke="#72DFFF" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/><path d="M32.8 28.3 59 21.8" stroke="#55E6EF" stroke-width="2.1" stroke-linecap="round"/><path d="M33.1 29.2 60 29.2" stroke="#2C9CFF" stroke-width="2.1" stroke-linecap="round"/><path d="M32.8 30.1 57.5 39" stroke="#946BFF" stroke-width="2.1" stroke-linecap="round"/><g stroke="#72DFFF" stroke-linecap="round"><path d="M8 55.5h38M8 60h38" stroke-width="1.7"/><path d="m13 54.2-1 7.1M22 54.2l-1 7.1M31 54.2l-1 7.1M40 54.2l-1 7.1" stroke-width="1.15"/></g>
+  </symbol>
+  <symbol id="icon-line-clamp" viewBox="0 0 64 64" fill="none">
+    <g stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21v-7a6 6 0 0 1 6-6h7M43 8h7a6 6 0 0 1 6 6v7M56 43v7a6 6 0 0 1-6 6h-7M21 56h-7a6 6 0 0 1-6-6v-7" opacity=".92"/><path d="M14 24h36M21 24v8c0 8 4.4 13 11 13s11-5 11-13v-8M26 24v7.5c0 4.6 2.2 7.2 6 7.2s6-2.6 6-7.2V24M18 20h8M38 20h8"/></g><circle cx="32" cy="24" r="3" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-line-protrusion" viewBox="0 0 64 64" fill="none">
+    <g stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="24" opacity=".28"/><circle cx="32" cy="32" r="15" opacity=".42"/><path d="M5 32h10M49 32h10M32 5v10M32 49v10"/><path d="M11 41h12c4.6 0 5.1-14 10.1-14S38.6 41 43 41h10M38 18h9M43 18v17M39.5 22l3.5-4 3.5 4M39.5 31l3.5 4 3.5-4"/></g><circle cx="33" cy="27" r="3.2" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-magnetic-plate" viewBox="0 0 64 64" fill="none">
+    <g stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="m10 24 22-12 22 12-22 12-22-12Z" fill="currentColor" fill-opacity=".08"/><path d="M10 24v20l22 12 22-12V24M32 36v20M17 33.5 32 42l15-8.5M20 26.5 32 20l12 6.5-12 6.5-12-6.5ZM45 13v8M45 29v8M41.5 17l3.5-4 3.5 4M41.5 33l3.5 4 3.5-4"/></g><circle cx="45" cy="25" r="3.2" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-infrared-temperature" viewBox="0 0 64 64" fill="none">
+    <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M27 37.2V16a7 7 0 1 1 14 0v21.2a12 12 0 1 1-14 0ZM34 20v24M19 20c-4 4-4 20 0 24M13.5 15c-7 7-7 27 0 34"/></g><circle cx="34" cy="45" r="6" fill="currentColor"/><path d="M34 26v19" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-life-sensing" viewBox="0 0 64 64" fill="none">
+    <g stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="13" r="6"/><path d="M22 55c1-11 3-18 5-23l5 6 5-6c2 5 4 12 5 23M27 24l-8 9-7 2M37 24l8 9 7 2M7 43h12l3.5-6 6.3 13L35 39l4.5 7H57M47 12c3 2.3 3 7.7 0 10M52 8c6 5 6 13 0 18"/></g>
+  </symbol>
+</svg>

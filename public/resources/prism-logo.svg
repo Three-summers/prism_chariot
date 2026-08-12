@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>光棱战车棱镜轨道 Logo</title>
+  <desc>三棱镜、入射光、青蓝紫折射光与轨道元素组成的品牌符号</desc>
+  <defs>
+    <linearGradient id="prismFace" x1="15" y1="9" x2="43" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A9F1FF" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#2176FF" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="2" y1="29" x2="23" y2="29" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7BE8FF" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#E8FCFF"/>
+    </linearGradient>
+  </defs>
+  <path d="M3 28.5H21" stroke="url(#beam)" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M25 6.5 10.8 50.5h30.5L25 6.5Z" fill="url(#prismFace)" stroke="#72DFFF" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M25 6.5 25.8 50.5M10.8 50.5l22.1-22.1M41.3 50.5 20.4 28.4h12.5" stroke="#72DFFF" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" opacity=".86"/>
+  <path d="M32.8 28.3 59 21.8" stroke="#55E6EF" stroke-width="2.1" stroke-linecap="round"/>
+  <path d="M33.1 29.2 60 29.2" stroke="#2C9CFF" stroke-width="2.1" stroke-linecap="round"/>
+  <path d="M32.8 30.1 57.5 39" stroke="#946BFF" stroke-width="2.1" stroke-linecap="round"/>
+  <g stroke="#72DFFF" stroke-linecap="round">
+    <path d="M8 55.5h38M8 60h38" stroke-width="1.7" opacity=".9"/>
+    <path d="m13 54.2-1 7.1M22 54.2l-1 7.1M31 54.2l-1 7.1M40 54.2l-1 7.1" stroke-width="1.15" opacity=".65"/>
+  </g>
+</svg>

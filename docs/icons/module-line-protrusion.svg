@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>线突出识别</title>
+  <desc>扫描定位轨道导线局部突出与高度偏差</desc>
+  <g stroke="#27B7FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="32" r="24" opacity=".28"/>
+    <circle cx="32" cy="32" r="15" opacity=".42"/>
+    <path d="M5 32h10M49 32h10M32 5v10M32 49v10" opacity=".86"/>
+    <path d="M11 41h12c4.6 0 5.1-14 10.1-14S38.6 41 43 41h10"/>
+    <path d="M38 18h9M43 18v17"/>
+    <path d="m39.5 22 3.5-4 3.5 4M39.5 31l3.5 4 3.5-4" opacity=".8"/>
+  </g>
+  <circle cx="33" cy="27" r="3.2" fill="#27B7FF"/>
+</svg>
