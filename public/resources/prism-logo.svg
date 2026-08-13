@@ -1,24 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <title>光棱战车棱镜轨道 Logo</title>
-  <desc>三棱镜、入射光、青蓝紫折射光与轨道元素组成的品牌符号</desc>
+  <title>光棱战车棱镜核心 Logo</title>
+  <desc>由青蓝棱镜核心、紫色能量切面和向前展开的光束构成的品牌符号</desc>
   <defs>
-    <linearGradient id="prismFace" x1="15" y1="9" x2="43" y2="52" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A9F1FF" stop-opacity=".28"/>
-      <stop offset="1" stop-color="#2176FF" stop-opacity=".05"/>
+    <linearGradient id="beam" x1="30" y1="32" x2="61" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#80F2FF"/>
+      <stop offset=".52" stop-color="#25BFFF"/>
+      <stop offset="1" stop-color="#7C5CFF"/>
     </linearGradient>
-    <linearGradient id="beam" x1="2" y1="29" x2="23" y2="29" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#7BE8FF" stop-opacity=".08"/>
-      <stop offset="1" stop-color="#E8FCFF"/>
+    <linearGradient id="faceLight" x1="8" y1="18" x2="29" y2="33" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C7FAFF" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#38D9FF" stop-opacity=".08"/>
     </linearGradient>
+    <linearGradient id="faceDark" x1="28" y1="8" x2="42" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2AC7FF" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#176BFF" stop-opacity=".06"/>
+    </linearGradient>
+    <linearGradient id="energy" x1="23" y1="27" x2="37" y2="39" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B8A0FF"/>
+      <stop offset="1" stop-color="#7047FF"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  <path d="M3 28.5H21" stroke="url(#beam)" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M25 6.5 10.8 50.5h30.5L25 6.5Z" fill="url(#prismFace)" stroke="#72DFFF" stroke-width="2.2" stroke-linejoin="round"/>
-  <path d="M25 6.5 25.8 50.5M10.8 50.5l22.1-22.1M41.3 50.5 20.4 28.4h12.5" stroke="#72DFFF" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" opacity=".86"/>
-  <path d="M32.8 28.3 59 21.8" stroke="#55E6EF" stroke-width="2.1" stroke-linecap="round"/>
-  <path d="M33.1 29.2 60 29.2" stroke="#2C9CFF" stroke-width="2.1" stroke-linecap="round"/>
-  <path d="M32.8 30.1 57.5 39" stroke="#946BFF" stroke-width="2.1" stroke-linecap="round"/>
-  <g stroke="#72DFFF" stroke-linecap="round">
-    <path d="M8 55.5h38M8 60h38" stroke-width="1.7" opacity=".9"/>
-    <path d="m13 54.2-1 7.1M22 54.2l-1 7.1M31 54.2l-1 7.1M40 54.2l-1 7.1" stroke-width="1.15" opacity=".65"/>
+
+  <g stroke="url(#beam)" stroke-linecap="round" filter="url(#glow)">
+    <path d="M34 26.5 58.5 18" stroke-width="2.4"/>
+    <path d="M35 31.5h26" stroke-width="2.8"/>
+    <path d="M34 36.5 57 45" stroke-width="2.4"/>
   </g>
+
+  <path d="M7.5 18.5 28 7l17.5 10.5L41 45 24 56.5 7.5 45Z" fill="#071B29" stroke="#81EFFF" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M7.5 18.5 27.5 30.5 28 7Z" fill="url(#faceLight)"/>
+  <path d="M28 7 45.5 17.5 27.5 30.5Z" fill="url(#faceDark)"/>
+  <path d="M7.5 18.5 27.5 30.5 24 56.5 7.5 45Z" fill="#0A2B3D" fill-opacity=".72"/>
+  <path d="M27.5 30.5 45.5 17.5 41 45 24 56.5Z" fill="#0A2034" fill-opacity=".78"/>
+  <path d="M7.5 18.5 27.5 30.5 28 7M27.5 30.5 45.5 17.5M27.5 30.5 24 56.5M27.5 30.5 41 45" stroke="#68DFFF" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" opacity=".82"/>
+  <path d="m27.5 24.5 7 6-7 7-7-7Z" fill="url(#energy)" stroke="#D2C7FF" stroke-width="1.2" filter="url(#glow)"/>
+  <path d="m49.5 24.5 7 7-7 7" stroke="url(#beam)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
