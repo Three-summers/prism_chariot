@@ -54,7 +54,7 @@ export interface TrendSeries {
 export interface DashboardCase {
   id: string
   levelKey: TranslationKey
-  color: 'red' | 'orange' | 'yellow'
+  color: 'red' | 'orange' | 'yellow' | 'green'
   time: string
   spot: string
   typeKey: TranslationKey
@@ -64,11 +64,19 @@ export interface DashboardCase {
   updated: string
 }
 export interface OverlayStat { labelKey: TranslationKey; value: string; unit?: string }
+export interface DetectionBox {
+  /** Coordinates normalized to the source image dimensions (0..1). */
+  x: number
+  y: number
+  width: number
+  height: number
+}
 export interface DetectionOverlayModel {
   kind: DetectionOverlayKind
   titleKey: TranslationKey
   detailKey: TranslationKey
   stats: OverlayStat[]
+  detectionBox?: DetectionBox
 }
 export interface ResolutionDefaults {
   conclusions: TranslationKey[]
@@ -88,6 +96,12 @@ export interface DashboardViewModel {
     speed: string
     directionKey: TranslationKey
     modeKey: TranslationKey
+    /** The existing placeholder remains the default for mock modules. */
+    kind?: 'placeholder' | 'image'
+    src?: string
+    sourceWidth?: number
+    sourceHeight?: number
+    detectionBox?: DetectionBox
   }
   map: { floors: MapFloor[]; defaultFloor: string; currentPoint: string }
   logs: LogEntry[]

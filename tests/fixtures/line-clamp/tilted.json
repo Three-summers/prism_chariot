@@ -1,0 +1,8 @@
+{
+  "status": "tilted",
+  "success": true,
+  "hasScrew": true,
+  "isTilted": true,
+  "angleLimitDeg": 3,
+  "description": "Center screw is present and clamp angle exceeds tolerance"
+}

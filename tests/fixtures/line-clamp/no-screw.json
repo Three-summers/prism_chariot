@@ -1,0 +1,8 @@
+{
+  "status": "no-screw",
+  "success": true,
+  "hasScrew": false,
+  "isTilted": false,
+  "angleLimitDeg": 3,
+  "description": "Clamp is aligned but the center screw is missing"
+}

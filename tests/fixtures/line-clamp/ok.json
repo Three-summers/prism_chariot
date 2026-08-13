@@ -1,0 +1,8 @@
+{
+  "status": "ok",
+  "success": true,
+  "hasScrew": true,
+  "isTilted": false,
+  "angleLimitDeg": 3,
+  "description": "Screw present and clamp angle remains within tolerance"
+}

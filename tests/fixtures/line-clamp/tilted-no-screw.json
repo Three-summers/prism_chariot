@@ -1,0 +1,8 @@
+{
+  "status": "tilted-no-screw",
+  "success": true,
+  "hasScrew": false,
+  "isTilted": true,
+  "angleLimitDeg": 3,
+  "description": "Clamp angle exceeds tolerance and the center screw is missing"
+}
