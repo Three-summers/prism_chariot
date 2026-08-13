@@ -12,6 +12,7 @@ dist/
 **/.env
 **/cache/
 **/dist/
+**/output/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
