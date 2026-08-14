@@ -44,3 +44,29 @@ export interface MmWaveFrame {
   heights: TargetHeight[]
   vitalSigns: VitalSignsReading[]
 }
+
+export type LifeState = 'notDetected' | 'normal' | 'motionless' | 'breathHold' | 'vitalsAbnormal' | 'fallen'
+
+export interface PersonSnapshot {
+  id: number
+  position: { x: number; y: number; z: number }
+  speed: number
+  height: number
+  confidence: number
+  rangeBin: number
+  breathDeviation: number
+  heartRate: number
+  breathRate: number
+  heartWaveform: number[]
+  breathWaveform: number[]
+  trajectory: Array<{ x: number; y: number; atMs: number }>
+  state: LifeState
+  lastSeenAtMs: number
+}
+
+export interface LifeSensingSnapshot {
+  frameNumber: number
+  receivedAtMs: number
+  points: RadarPoint[]
+  people: PersonSnapshot[]
+}

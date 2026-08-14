@@ -22,7 +22,7 @@ interface EncodedTlv {
 export class MmWaveStreamDecoder {
   readonly maxPacketLength: number
   parseErrorCount = 0
-  private buffer = new Uint8Array()
+  private buffer: Uint8Array = new Uint8Array()
 
   constructor(maxPacketLength = 1024 * 1024) {
     this.maxPacketLength = maxPacketLength
