@@ -19,6 +19,8 @@ export function DetectionOverlay({ overlay }: { overlay: DetectionOverlayModel }
         </g>)}
       </svg>}
       {overlay.wires?.map((wire) => <span key={wire.wire} className={`protrusion-wire-label state-${wire.state}`} style={{ left: `${wire.spots[1].x * 100}%`, top: `${wire.spots[1].y * 100}%` }}>W{wire.wire + 1} {Math.abs(wire.deviationDeg).toFixed(1)}°</span>)}
+      {overlay.stripes?.map((stripe, index) => <span key={index} className={`magnetic-stripe state-${stripe.state}`} style={{ left: `${stripe.x * 100}%`, top: `${stripe.y * 100}%`, width: `${stripe.width * 100}%`, height: `${stripe.height * 100}%` }} />)}
+      {overlay.gap ? <span className="magnetic-gap" style={{ left: `${overlay.gap.x * 100}%`, top: `${overlay.gap.y * 100}%`, width: `${overlay.gap.width * 100}%`, height: `${overlay.gap.height * 100}%` }} /> : null}
       <div className="scene-alert">
         <div className="scene-alert-tag"><span>{t(overlay.titleKey)}</span><small>{t(overlay.detailKey)}</small></div>
         <div className="scene-alert-stats">{overlay.stats.map((stat) => <p key={stat.labelKey}><span>{t(stat.labelKey)}</span><strong>{text(stat.value)}</strong>{stat.unit ? <small>{stat.unit}</small> : null}</p>)}</div>

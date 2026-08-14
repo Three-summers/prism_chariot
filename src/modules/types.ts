@@ -77,6 +77,10 @@ export interface DetectionWire {
   deviationDeg: number
   state: 'ok' | 'warning' | 'alarm'
 }
+export interface DetectionStripe extends DetectionBox {
+  state: 'normal' | 'warped'
+}
+export interface DetectionGap extends DetectionBox {}
 export interface DetectionOverlayModel {
   kind: DetectionOverlayKind
   titleKey: TranslationKey
@@ -84,6 +88,8 @@ export interface DetectionOverlayModel {
   stats: OverlayStat[]
   detectionBox?: DetectionBox
   wires?: DetectionWire[]
+  stripes?: DetectionStripe[]
+  gap?: DetectionGap
 }
 export interface ResolutionDefaults {
   conclusions: TranslationKey[]

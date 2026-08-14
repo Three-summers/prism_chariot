@@ -9,12 +9,14 @@ import { I18nProvider, useI18n } from './i18n/I18nProvider'
 import { LineClampBatchController, type DirectoryImage, type LineClampBatchStatus } from './lineClamp/directoryBatch'
 import { imagesFromFileList, pickImageDirectory } from './lineClamp/directoryPicker'
 import { lineClampDataProvider, type LineClampDashboardResult } from './lineClamp/lineClampDataProvider'
+import { magneticPlateDataProvider } from './magneticPlate/magneticPlateDataProvider'
 import { LineProtrusionCaseTracker } from './lineProtrusion/caseTracker'
 import { lineProtrusionDataProvider } from './lineProtrusion/lineProtrusionDataProvider'
 import { mapLineProtrusionResult } from './lineProtrusion/lineProtrusionViewModel'
 import { moduleDefinitions } from './modules/registry'
 import type { DashboardCase, DashboardViewModel, ModuleId } from './modules/types'
 import { computeUiScale } from './uiScale'
+import type { MagneticPlateControls } from './components/dashboard/MediaPanel'
 
 function useUiScale() {
   useLayoutEffect(() => {
@@ -52,6 +54,7 @@ function DashboardApp() {
   const batchController = useRef(new LineClampBatchController())
   const lineProtrusionTracker = useRef(new LineProtrusionCaseTracker())
   const lineProtrusionCases = useRef<DashboardCase[]>([])
+  const magneticPlateRequest = useRef(0)
 
   useEffect(() => {
     let cancelled = false
@@ -65,7 +68,9 @@ function DashboardApp() {
       ? lineClampDataProvider.getDashboard().then((data) => ({ ...data, cases: [], defaultCaseId: '' }))
       : activeModule === 'lineProtrusion'
         ? lineProtrusionDataProvider.getDashboard()
-        : mockDashboardDataProvider.getDashboard(activeModule)
+        : activeModule === 'magneticPlate'
+          ? magneticPlateDataProvider.getDashboard()
+          : mockDashboardDataProvider.getDashboard(activeModule)
     request.then((data) => { if (!cancelled) setViewModel(data) }).catch((error: unknown) => {
       console.error('Dashboard data load failed', error)
       if (!cancelled) setLoadError(true)
@@ -76,6 +81,7 @@ function DashboardApp() {
   useEffect(() => () => {
     batchController.current.stop()
     lineClampDataProvider.dispose()
+    magneticPlateDataProvider.dispose()
   }, [])
 
   async function startBatch(images: DirectoryImage[]) {
@@ -136,7 +142,27 @@ function DashboardApp() {
       lineClampDataProvider.dispose()
       setBatch((current) => ({ ...current, status: 'idle', current: 0, total: 0 }))
     }
+    if (activeModule === 'magneticPlate' && moduleId !== 'magneticPlate') {
+      magneticPlateRequest.current += 1
+      magneticPlateDataProvider.dispose()
+    }
     setActiveModule(moduleId)
+  }
+
+  const magneticPlateControls: MagneticPlateControls = {
+    onImage: (file) => {
+      const requestId = ++magneticPlateRequest.current
+      setLoadError(false)
+      void magneticPlateDataProvider.inspect(file).then((result) => {
+        if (requestId !== magneticPlateRequest.current) return
+        setViewModel((current) => current?.moduleId === 'magneticPlate' ? result.viewModel : current)
+        setLoadError(result.detection.status === 'failed')
+      }).catch((error: unknown) => {
+        if (requestId !== magneticPlateRequest.current) return
+        console.error('Magnetic-plate image failed', error)
+        setLoadError(true)
+      })
+    },
   }
 
   const batchControls: BatchControls = {
@@ -176,7 +202,7 @@ function DashboardApp() {
   const dashboardReady = viewModel?.moduleId === activeModule
   return <div className="stage"><div className="app-shell">
     <AppHeader activeModule={activeModule} onModuleChange={changeModule} timestamp={timestamp} />
-    {dashboardReady ? <DashboardShell definition={definition} viewModel={viewModel} batchControls={activeModule === 'lineClamp' ? batchControls : undefined} lineProtrusionControls={activeModule === 'lineProtrusion' ? lineProtrusionControls : undefined} mediaError={activeModule === 'lineClamp' && loadError} /> : <main className="dashboard-state" data-accent={definition.accent}>
+    {dashboardReady ? <DashboardShell definition={definition} viewModel={viewModel} batchControls={activeModule === 'lineClamp' ? batchControls : undefined} lineProtrusionControls={activeModule === 'lineProtrusion' ? lineProtrusionControls : undefined} magneticPlateControls={activeModule === 'magneticPlate' ? magneticPlateControls : undefined} mediaError={['lineClamp', 'magneticPlate'].includes(activeModule) && loadError} /> : <main className="dashboard-state" data-accent={definition.accent}>
       {loadError ? <><RefreshCw size={30} /><strong>{t('status.loadError')}</strong></> : <><span className="loading-ring" /><strong>{t('status.loading')}</strong></>}
     </main>}
   </div></div>
