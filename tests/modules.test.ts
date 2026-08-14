@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import * as registry from '../src/modules/registry.ts'
 import {
   MODULE_IDS,
   getModuleDefinition,
@@ -11,16 +12,20 @@ test('registers all five modules in the intended navigation order', () => {
     'lineClamp',
     'lineProtrusion',
     'magneticPlate',
-    'infraredTemperature',
     'lifeSensing',
+    'infraredTemperature',
   ])
   assert.equal(new Set(MODULE_IDS).size, 5)
+})
+
+test('opens line clamp as the default dashboard module', () => {
+  assert.equal((registry as Record<string, unknown>).DEFAULT_MODULE_ID, 'lineClamp')
 })
 
 test('gives each module one controlled overlay and complete panel definitions', () => {
   assert.deepEqual(
     MODULE_IDS.map((id) => moduleDefinitions[id].overlay),
-    ['line-clamp', 'line-protrusion', 'magnetic-plate', 'infrared', 'vital-signs'],
+    ['line-clamp', 'line-protrusion', 'magnetic-plate', 'vital-signs', 'infrared'],
   )
 
   for (const id of MODULE_IDS) {

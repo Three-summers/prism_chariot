@@ -13,7 +13,7 @@ import { magneticPlateDataProvider } from './magneticPlate/magneticPlateDataProv
 import { LineProtrusionCaseTracker } from './lineProtrusion/caseTracker'
 import { lineProtrusionDataProvider } from './lineProtrusion/lineProtrusionDataProvider'
 import { mapLineProtrusionResult } from './lineProtrusion/lineProtrusionViewModel'
-import { moduleDefinitions } from './modules/registry'
+import { DEFAULT_MODULE_ID, moduleDefinitions } from './modules/registry'
 import type { DashboardCase, DashboardViewModel, ModuleId } from './modules/types'
 import { computeUiScale } from './uiScale'
 import type { MagneticPlateControls } from './components/dashboard/MediaPanel'
@@ -47,7 +47,7 @@ type BatchFrame = { kind: 'result'; result: LineClampDashboardResult } | { kind:
 function DashboardApp() {
   useUiScale()
   const { t } = useI18n()
-  const [activeModule, setActiveModule] = useState<ModuleId>('lifeSensing')
+  const [activeModule, setActiveModule] = useState<ModuleId>(DEFAULT_MODULE_ID)
   const [viewModel, setViewModel] = useState<DashboardViewModel | null>(null)
   const [loadError, setLoadError] = useState(false)
   const [batch, setBatch] = useState<BatchState>({ status: 'idle', current: 0, total: 0, intervalSeconds: 1 })

@@ -13,9 +13,11 @@ export const MODULE_IDS: readonly ModuleId[] = [
   'lineClamp',
   'lineProtrusion',
   'magneticPlate',
-  'infraredTemperature',
   'lifeSensing',
+  'infraredTemperature',
 ]
+
+export const DEFAULT_MODULE_ID: ModuleId = 'lineClamp'
 
 const caseColumns: CaseColumnDefinition[] = [
   ['number', 'table.number'], ['level', 'table.level'], ['time', 'table.time'], ['point', 'table.point'],
@@ -39,8 +41,8 @@ const definitions: Array<{
   { id: 'lineClamp', labelKey: 'modules.lineClamp', icon: 'scan', accent: 'cyan', overlay: 'line-clamp', metricKeys: ['metrics.deviceStatus', 'metrics.speed', 'metrics.floor', 'metrics.point', 'metrics.clampCount', 'metrics.anomalyCount', 'metrics.confidence', 'metrics.alertLevel'], trendKeys: ['trend.deformationConfidence', 'trend.threshold'] },
   { id: 'lineProtrusion', labelKey: 'modules.lineProtrusion', icon: 'crosshair', accent: 'cyan', overlay: 'line-protrusion', metricKeys: ['metrics.inspectionStatus', 'metrics.speed', 'metrics.floor', 'metrics.point', 'metrics.protrusion', 'metrics.threshold', 'metrics.confidence', 'metrics.eventLevel'], trendKeys: ['trend.protrusion', 'trend.threshold'] },
   { id: 'magneticPlate', labelKey: 'modules.magneticPlate', icon: 'plate', accent: 'cyan', overlay: 'magnetic-plate', metricKeys: ['metrics.inspectionStatus', 'metrics.speed', 'metrics.floor', 'metrics.point', 'metrics.stripeSegments', 'metrics.gapDistance', 'metrics.continuity', 'metrics.alertLevel'], trendKeys: ['trend.gapDistance', 'trend.threshold'] },
-  { id: 'infraredTemperature', labelKey: 'modules.infraredTemperature', icon: 'thermometer', accent: 'orange', overlay: 'infrared', metricKeys: ['metrics.inspectionStatus', 'metrics.deviceId', 'metrics.floor', 'metrics.point', 'metrics.currentTemperature', 'metrics.threshold', 'metrics.temperatureRise', 'metrics.eventLevel'], trendKeys: ['trend.temperature', 'trend.threshold'] },
   { id: 'lifeSensing', labelKey: 'modules.lifeSensing', icon: 'heart', accent: 'violet', overlay: 'vital-signs', metricKeys: ['metrics.frontDistance', 'metrics.speed', 'metrics.floor', 'metrics.point', 'metrics.breathing', 'metrics.heartRate', 'metrics.lifeStatus', 'metrics.eventLevel'], trendKeys: ['trend.breathing', 'trend.heartRate'] },
+  { id: 'infraredTemperature', labelKey: 'modules.infraredTemperature', icon: 'thermometer', accent: 'orange', overlay: 'infrared', metricKeys: ['metrics.inspectionStatus', 'metrics.deviceId', 'metrics.floor', 'metrics.point', 'metrics.currentTemperature', 'metrics.threshold', 'metrics.temperatureRise', 'metrics.eventLevel'], trendKeys: ['trend.temperature', 'trend.threshold'] },
 ]
 
 export const moduleDefinitions: Record<ModuleId, ModuleDefinition> = Object.fromEntries(definitions.map((item) => {
