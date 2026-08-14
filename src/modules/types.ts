@@ -1,4 +1,5 @@
 import type { TranslationKey } from '../i18n/resources.ts'
+import type { LifeSensingStreamStatus, PersonSnapshot, RadarPoint } from '../lifeSensing/types.ts'
 
 export type ModuleId =
   | 'lineClamp'
@@ -99,6 +100,15 @@ export interface ResolutionDefaults {
   resolvedAt: string
 }
 
+export interface LifeSensingSceneModel {
+  sourceKind: 'simulated' | 'serial'
+  status: LifeSensingStreamStatus
+  parseErrorCount: number
+  selectedPersonId: number | null
+  points: RadarPoint[]
+  people: PersonSnapshot[]
+}
+
 export interface DashboardViewModel {
   moduleId: ModuleId
   timestamp: string
@@ -125,4 +135,5 @@ export interface DashboardViewModel {
   overlay: DetectionOverlayModel
   resolution: ResolutionDefaults
   systemStatusKeys: TranslationKey[]
+  lifeSensing?: LifeSensingSceneModel
 }
