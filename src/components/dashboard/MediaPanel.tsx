@@ -5,18 +5,20 @@ import type { DashboardViewModel } from '../../modules/types'
 import type { BatchControls } from './DashboardShell'
 import { DetectionOverlay } from './DetectionOverlay'
 import { LineProtrusionMedia, type LineProtrusionControls } from './LineProtrusionMedia'
+import { LifeSensingMedia, type LifeSensingControls } from './LifeSensingMedia'
 
 export interface MagneticPlateControls {
   onImage(file: File): void
 }
 
-export function MediaPanel({ viewModel, batchControls, lineProtrusionControls, magneticPlateControls, mediaError = false }: { viewModel: DashboardViewModel; batchControls?: BatchControls; lineProtrusionControls?: LineProtrusionControls; magneticPlateControls?: MagneticPlateControls; mediaError?: boolean }) {
+export function MediaPanel({ viewModel, batchControls, lineProtrusionControls, magneticPlateControls, lifeSensingControls, mediaError = false }: { viewModel: DashboardViewModel; batchControls?: BatchControls; lineProtrusionControls?: LineProtrusionControls; magneticPlateControls?: MagneticPlateControls; lifeSensingControls?: LifeSensingControls; mediaError?: boolean }) {
   const { t, text } = useI18n()
   const { media, timestamp, overlay } = viewModel
   const directoryInput = useRef<HTMLInputElement>(null)
   const imageInput = useRef<HTMLInputElement>(null)
 
   if (lineProtrusionControls) return <LineProtrusionMedia viewModel={viewModel} controls={lineProtrusionControls} />
+  if (lifeSensingControls && viewModel.lifeSensing) return <LifeSensingMedia viewModel={viewModel} controls={lifeSensingControls} />
 
   async function chooseDirectory() {
     if (!batchControls) return

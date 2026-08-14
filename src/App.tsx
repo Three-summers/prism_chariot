@@ -17,6 +17,8 @@ import { DEFAULT_MODULE_ID, moduleDefinitions } from './modules/registry'
 import type { DashboardCase, DashboardViewModel, ModuleId } from './modules/types'
 import { computeUiScale } from './uiScale'
 import type { MagneticPlateControls } from './components/dashboard/MediaPanel'
+import type { LifeSensingControls } from './components/dashboard/LifeSensingMedia'
+import { lifeSensingDataProvider } from './lifeSensing/lifeSensingDataProvider'
 
 function useUiScale() {
   useLayoutEffect(() => {
@@ -63,6 +65,20 @@ function DashboardApp() {
     if (activeModule === 'lineProtrusion') {
       lineProtrusionTracker.current.reset()
       lineProtrusionCases.current = []
+    }
+    if (activeModule === 'lifeSensing') {
+      const unsubscribe = lifeSensingDataProvider.subscribe((data) => {
+        if (!cancelled) setViewModel(data)
+      })
+      void lifeSensingDataProvider.start().catch((error: unknown) => {
+        console.error('Life-sensing stream failed', error)
+        if (!cancelled) setLoadError(true)
+      })
+      return () => {
+        cancelled = true
+        unsubscribe()
+        lifeSensingDataProvider.stop()
+      }
     }
     const request = activeModule === 'lineClamp'
       ? lineClampDataProvider.getDashboard().then((data) => ({ ...data, cases: [], defaultCaseId: '' }))
@@ -197,12 +213,16 @@ function DashboardApp() {
     },
   }
 
+  const lifeSensingControls: LifeSensingControls = {
+    onSelectPerson: (personId) => lifeSensingDataProvider.selectPerson(personId),
+  }
+
   const timestamp = viewModel?.timestamp ?? '2026-08-12 10:25:52'
   const definition = moduleDefinitions[activeModule]
   const dashboardReady = viewModel?.moduleId === activeModule
   return <div className="stage"><div className="app-shell">
     <AppHeader activeModule={activeModule} onModuleChange={changeModule} timestamp={timestamp} />
-    {dashboardReady ? <DashboardShell definition={definition} viewModel={viewModel} batchControls={activeModule === 'lineClamp' ? batchControls : undefined} lineProtrusionControls={activeModule === 'lineProtrusion' ? lineProtrusionControls : undefined} magneticPlateControls={activeModule === 'magneticPlate' ? magneticPlateControls : undefined} mediaError={['lineClamp', 'magneticPlate'].includes(activeModule) && loadError} /> : <main className="dashboard-state" data-accent={definition.accent}>
+    {dashboardReady ? <DashboardShell definition={definition} viewModel={viewModel} batchControls={activeModule === 'lineClamp' ? batchControls : undefined} lineProtrusionControls={activeModule === 'lineProtrusion' ? lineProtrusionControls : undefined} magneticPlateControls={activeModule === 'magneticPlate' ? magneticPlateControls : undefined} lifeSensingControls={activeModule === 'lifeSensing' ? lifeSensingControls : undefined} mediaError={['lineClamp', 'magneticPlate'].includes(activeModule) && loadError} /> : <main className="dashboard-state" data-accent={definition.accent}>
       {loadError ? <><RefreshCw size={30} /><strong>{t('status.loadError')}</strong></> : <><span className="loading-ring" /><strong>{t('status.loading')}</strong></>}
     </main>}
   </div></div>

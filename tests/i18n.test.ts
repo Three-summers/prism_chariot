@@ -10,6 +10,13 @@ test('translates representative navigation, panel, and action labels', () => {
   assert.equal(translate('en', 'actions.confirmResolution'), 'Confirm resolution')
 })
 
+test('translates life-sensing stream, target, and state labels', () => {
+  assert.equal(translate('zh', 'life.source.simulated'), '模拟串口')
+  assert.equal(translate('en', 'life.source.simulated'), 'Simulated serial')
+  assert.equal(translate('zh', 'life.state.fallen'), '人员跌倒')
+  assert.equal(translate('en', 'life.target', { id: 2 }), 'Person 2')
+})
+
 test('interpolates named values without changing unknown placeholders', () => {
   assert.equal(translate('zh', 'table.recordCount', { count: 5 }), '共 5 条记录')
   assert.equal(translate('en', 'table.recordCount', { count: 5 }), '5 records')

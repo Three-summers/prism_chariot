@@ -63,7 +63,7 @@ function mapMetric(metric: MetricValue, person: PersonSnapshot | undefined): Met
     return { ...metric, value: formatValue(person?.heartRate), unit: 'bpm', tone, detected: Boolean(person) }
   }
   if (metric.labelKey === 'metrics.lifeStatus') {
-    return { ...metric, value: state === 'normal' ? 'common.normal' : 'common.abnormal', unit: undefined, tone }
+    return { ...metric, value: `life.state.${state}`, unit: undefined, tone }
   }
   if (metric.labelKey === 'metrics.eventLevel') {
     return {
@@ -117,8 +117,5 @@ function toneForState(state: LifeState): MetricValue['tone'] {
 }
 
 function stateDetailKey(state: LifeState | undefined): DashboardViewModel['overlay']['detailKey'] {
-  if (state === 'fallen' || state === 'vitalsAbnormal') return 'event.personFallen'
-  if (state === 'motionless') return 'event.personStill'
-  if (state === 'breathHold') return 'event.vitalsWeak'
-  return 'common.normal'
+  return `life.state.${state ?? 'notDetected'}`
 }
