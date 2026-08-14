@@ -41,7 +41,7 @@ export class LineProtrusionCaseTracker {
       stateTone: 'processing',
       owner: '-',
       updated: timestamp.slice(11),
-    } as DashboardCase
+    }
   }
 }
 

@@ -23,7 +23,7 @@ function result(state: WireState = 'alarm'): LineProtrusionDetectionResult {
 
 test('maps maximum wire deviation and geometry into line protrusion dashboard', async () => {
   const base = await mockDashboardDataProvider.getDashboard('lineProtrusion')
-  const cases: DashboardCase[] = [{ ...base.cases[0], id: 'LPR-0001', typeKey: 'event.lineProtrusionAlarm' as DashboardCase['typeKey'] }]
+  const cases: DashboardCase[] = [{ ...base.cases[0], id: 'LPR-0001', typeKey: 'event.lineProtrusionAlarm' }]
 
   const mapped = mapLineProtrusionResult(result(), base, cases, config, 'blob:video')
 

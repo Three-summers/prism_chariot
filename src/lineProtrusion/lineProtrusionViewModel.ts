@@ -30,7 +30,7 @@ export function mapLineProtrusionResult(
       })),
     },
     cases: [...cases],
-    defaultCaseId: cases.at(-1)?.id ?? '',
+    defaultCaseId: cases[cases.length - 1]?.id ?? '',
     overlay: {
       ...baseViewModel.overlay,
       detailKey: detailKey(result),
@@ -67,9 +67,9 @@ function mapMetric(
 
 function detailKey(result: LineProtrusionDetectionResult): TranslationKey {
   if (result.state === 'failed') return 'overlay.detectionFailed'
-  if (result.state === 'alarm') return 'overlay.protrusionAlarm' as TranslationKey
-  if (result.state === 'warning') return 'overlay.protrusionWarning' as TranslationKey
-  return 'overlay.protrusionNormal' as TranslationKey
+  if (result.state === 'alarm') return 'overlay.protrusionAlarm'
+  if (result.state === 'warning') return 'overlay.protrusionWarning'
+  return 'overlay.protrusionNormal'
 }
 
 function toneForState(state: WireState): MetricValue['tone'] {

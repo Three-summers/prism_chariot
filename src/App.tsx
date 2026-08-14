@@ -3,11 +3,15 @@ import { RefreshCw } from 'lucide-react'
 import { AppSettingsProvider } from './app/AppSettingsProvider'
 import { AppHeader } from './components/dashboard/AppHeader'
 import { DashboardShell, type BatchControls } from './components/dashboard/DashboardShell'
+import type { LineProtrusionControls } from './components/dashboard/LineProtrusionMedia'
 import { mockDashboardDataProvider } from './data/DashboardDataProvider'
 import { I18nProvider, useI18n } from './i18n/I18nProvider'
 import { LineClampBatchController, type DirectoryImage, type LineClampBatchStatus } from './lineClamp/directoryBatch'
 import { imagesFromFileList, pickImageDirectory } from './lineClamp/directoryPicker'
 import { lineClampDataProvider, type LineClampDashboardResult } from './lineClamp/lineClampDataProvider'
+import { LineProtrusionCaseTracker } from './lineProtrusion/caseTracker'
+import { lineProtrusionDataProvider } from './lineProtrusion/lineProtrusionDataProvider'
+import { mapLineProtrusionResult } from './lineProtrusion/lineProtrusionViewModel'
 import { moduleDefinitions } from './modules/registry'
 import type { DashboardCase, DashboardViewModel, ModuleId } from './modules/types'
 import { computeUiScale } from './uiScale'
@@ -46,14 +50,22 @@ function DashboardApp() {
   const [loadError, setLoadError] = useState(false)
   const [batch, setBatch] = useState<BatchState>({ status: 'idle', current: 0, total: 0, intervalSeconds: 1 })
   const batchController = useRef(new LineClampBatchController())
+  const lineProtrusionTracker = useRef(new LineProtrusionCaseTracker())
+  const lineProtrusionCases = useRef<DashboardCase[]>([])
 
   useEffect(() => {
     let cancelled = false
     setViewModel(null)
     setLoadError(false)
+    if (activeModule === 'lineProtrusion') {
+      lineProtrusionTracker.current.reset()
+      lineProtrusionCases.current = []
+    }
     const request = activeModule === 'lineClamp'
       ? lineClampDataProvider.getDashboard().then((data) => ({ ...data, cases: [], defaultCaseId: '' }))
-      : mockDashboardDataProvider.getDashboard(activeModule)
+      : activeModule === 'lineProtrusion'
+        ? lineProtrusionDataProvider.getDashboard()
+        : mockDashboardDataProvider.getDashboard(activeModule)
     request.then((data) => { if (!cancelled) setViewModel(data) }).catch((error: unknown) => {
       console.error('Dashboard data load failed', error)
       if (!cancelled) setLoadError(true)
@@ -141,12 +153,30 @@ function DashboardApp() {
     onStop: () => { batchController.current.stop(); setBatch((current) => ({ ...current, status: batchController.current.status })) },
   }
 
+  const lineProtrusionControls: LineProtrusionControls = {
+    onDetection: (result, config, sourceUrl) => {
+      const timestamp = localTimestamp(new Date())
+      const created = lineProtrusionTracker.current.next(result, timestamp)
+      if (created.length) lineProtrusionCases.current = [...lineProtrusionCases.current, ...created]
+      setViewModel((current) => current?.moduleId === 'lineProtrusion'
+        ? mapLineProtrusionResult(result, current, lineProtrusionCases.current, config, sourceUrl)
+        : current)
+    },
+    onReset: () => {
+      lineProtrusionTracker.current.reset()
+      lineProtrusionCases.current = []
+      void lineProtrusionDataProvider.getDashboard().then((dashboard) => {
+        setViewModel((current) => current?.moduleId === 'lineProtrusion' ? dashboard : current)
+      })
+    },
+  }
+
   const timestamp = viewModel?.timestamp ?? '2026-08-12 10:25:52'
   const definition = moduleDefinitions[activeModule]
   const dashboardReady = viewModel?.moduleId === activeModule
   return <div className="stage"><div className="app-shell">
     <AppHeader activeModule={activeModule} onModuleChange={changeModule} timestamp={timestamp} />
-    {dashboardReady ? <DashboardShell definition={definition} viewModel={viewModel} batchControls={activeModule === 'lineClamp' ? batchControls : undefined} mediaError={activeModule === 'lineClamp' && loadError} /> : <main className="dashboard-state" data-accent={definition.accent}>
+    {dashboardReady ? <DashboardShell definition={definition} viewModel={viewModel} batchControls={activeModule === 'lineClamp' ? batchControls : undefined} lineProtrusionControls={activeModule === 'lineProtrusion' ? lineProtrusionControls : undefined} mediaError={activeModule === 'lineClamp' && loadError} /> : <main className="dashboard-state" data-accent={definition.accent}>
       {loadError ? <><RefreshCw size={30} /><strong>{t('status.loadError')}</strong></> : <><span className="loading-ring" /><strong>{t('status.loading')}</strong></>}
     </main>}
   </div></div>
@@ -174,6 +204,11 @@ function failedCase(sequence: number, relativePath: string, timestamp: string): 
     typeKey: 'event.detectionFailed', stateKey: 'common.processing', stateTone: 'processing',
     owner: '-', updated: timestamp.slice(11),
   }
+}
+
+function localTimestamp(date: Date): string {
+  const parts = [date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()]
+  return `${parts[0]}-${String(parts[1]).padStart(2, '0')}-${String(parts[2]).padStart(2, '0')} ${String(parts[3]).padStart(2, '0')}:${String(parts[4]).padStart(2, '0')}:${String(parts[5]).padStart(2, '0')}`
 }
 
 export default function App() {

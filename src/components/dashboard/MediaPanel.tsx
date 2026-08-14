@@ -4,11 +4,14 @@ import { useI18n } from '../../i18n/I18nProvider'
 import type { DashboardViewModel } from '../../modules/types'
 import type { BatchControls } from './DashboardShell'
 import { DetectionOverlay } from './DetectionOverlay'
+import { LineProtrusionMedia, type LineProtrusionControls } from './LineProtrusionMedia'
 
-export function MediaPanel({ viewModel, batchControls, mediaError = false }: { viewModel: DashboardViewModel; batchControls?: BatchControls; mediaError?: boolean }) {
+export function MediaPanel({ viewModel, batchControls, lineProtrusionControls, mediaError = false }: { viewModel: DashboardViewModel; batchControls?: BatchControls; lineProtrusionControls?: LineProtrusionControls; mediaError?: boolean }) {
   const { t, text } = useI18n()
   const { media, timestamp, overlay } = viewModel
   const directoryInput = useRef<HTMLInputElement>(null)
+
+  if (lineProtrusionControls) return <LineProtrusionMedia viewModel={viewModel} controls={lineProtrusionControls} />
 
   async function chooseDirectory() {
     if (!batchControls) return

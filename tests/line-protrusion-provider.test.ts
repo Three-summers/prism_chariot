@@ -10,4 +10,8 @@ test('provides an isolated line protrusion dashboard with no Mock CASE records',
   assert.equal(second.moduleId, 'lineProtrusion')
   assert.equal(second.cases.length, 0)
   assert.equal(second.defaultCaseId, '')
+  assert.equal(second.metrics.find((item) => item.labelKey === 'metrics.protrusion')?.value, '0')
+  assert.equal(second.metrics.find((item) => item.labelKey === 'metrics.eventLevel')?.value, 'common.normal')
+  assert.deepEqual(second.trend.series[0].values, [0, 0, 0, 0, 0, 0])
+  assert.equal(second.overlay.wires?.length ?? 0, 0)
 })
