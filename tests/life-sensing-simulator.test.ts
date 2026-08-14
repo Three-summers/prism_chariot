@@ -38,10 +38,31 @@ test('cycles a deterministic two-person scenario every 36 seconds', () => {
     repeated.tracks.map(({ x, y, z }) => ({ x, y, z })),
     first.tracks.map(({ x, y, z }) => ({ x, y, z })),
   )
+  assert.deepEqual(
+    repeated.vitalSigns.map(({ heartRate, breathRate }) => ({ heartRate, breathRate })),
+    first.vitalSigns.map(({ heartRate, breathRate }) => ({ heartRate, breathRate })),
+  )
   assert.ok(fallPhase.heights[0].maxZ < first.heights[0].maxZ * 0.6)
   assert.equal(fallPhase.vitalSigns[0].heartRate, 44)
-  assert.equal(fallPhase.vitalSigns[1].heartRate, 78)
+  assert.ok(fallPhase.vitalSigns[1].heartRate >= 78 && fallPhase.vitalSigns[1].heartRate <= 84)
   assert.ok(first.points.length >= 30)
+})
+
+test('keeps normal vital rates centered on 81 bpm with visible smooth variation', () => {
+  const sampleTimes = [0, 1_500, 3_000, 4_500]
+  const frames = sampleTimes.map((elapsedMs, index) => createSimulatedFrame(elapsedMs, index + 1))
+
+  for (const personIndex of [0, 1]) {
+    const samples = frames.map(({ vitalSigns }) => vitalSigns[personIndex])
+    const heartRates = samples.map(({ heartRate }) => heartRate)
+    const breathRates = samples.map(({ breathRate }) => breathRate)
+
+    assert.equal(heartRates[0], 81)
+    assert.ok(new Set(heartRates).size > 1)
+    assert.ok(heartRates.every((value) => value >= 78 && value <= 84))
+    assert.ok(new Set(breathRates).size > 1)
+    assert.ok(breathRates.every((value) => value >= 15 && value <= 19))
+  }
 })
 
 test('emits variable binary chunks that decode through the real stream decoder', () => {

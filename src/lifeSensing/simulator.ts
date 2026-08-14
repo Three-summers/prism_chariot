@@ -4,6 +4,7 @@ import type { LifeSensingByteSink, LifeSensingByteSource, MmWaveFrame, RadarPoin
 const SCENARIO_DURATION_MS = 36_000
 const FRAME_INTERVAL_MS = 100
 const CHUNK_PATTERN = [31, 73, 19, 127, 47, 211]
+const NORMAL_HEART_RATE = 81
 
 export interface SimulatorClock {
   now(): number
@@ -100,8 +101,8 @@ function firstPerson(time: number): { track: TrackedTarget; height: number; vita
   const height = time >= 19 && time < 27 ? 1.72 - 1.07 * fallingProgress : 1.72
   const breathHold = time >= 13 && time < 19
   const lowVitals = time >= 19 && time < 27
-  const heartRate = lowVitals ? 44 : 72
-  const breathRate = breathHold ? 0 : lowVitals ? 9 : 16
+  const heartRate = lowVitals ? 44 : oscillatingRate(NORMAL_HEART_RATE, 3, time, 6, 0)
+  const breathRate = breathHold ? 0 : lowVitals ? 9 : oscillatingRate(16, 1, time, 9, 0)
   return {
     track: target(1, x, y, height * 0.48, speed, 0, 0.97),
     height,
@@ -114,11 +115,24 @@ function secondPerson(time: number): { track: TrackedTarget; height: number; vit
   const y = 3.65 + Math.cos(time * 0.31) * 0.18
   const velocityX = Math.cos(time * 0.34) * 0.068
   const velocityY = -Math.sin(time * 0.31) * 0.056
+  const phase = Math.PI
   return {
     track: target(2, x, y, 0.84, velocityX, velocityY, 0.95),
     height: 1.76,
-    vitalSigns: vitalSigns(2, Math.hypot(x, y), time, 78, 17, 0.13, Math.PI / 3),
+    vitalSigns: vitalSigns(
+      2,
+      Math.hypot(x, y),
+      time,
+      oscillatingRate(NORMAL_HEART_RATE, 3, time, 6, phase),
+      oscillatingRate(17, 1, time, 9, phase),
+      0.13,
+      Math.PI / 3,
+    ),
   }
+}
+
+function oscillatingRate(base: number, amplitude: number, time: number, period: number, phase: number): number {
+  return base + Math.sin(time * Math.PI * 2 / period + phase) * amplitude
 }
 
 function target(id: number, x: number, y: number, z: number, velocityX: number, velocityY: number, confidence: number): TrackedTarget {

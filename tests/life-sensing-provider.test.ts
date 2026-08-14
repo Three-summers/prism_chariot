@@ -81,7 +81,7 @@ test('streams decoded frames through analysis and switches selected person', asy
   assert.equal(latest(updates).lifeSensing?.selectedPersonId, 1)
   provider.selectPerson(2)
   assert.equal(latest(updates).lifeSensing?.selectedPersonId, 2)
-  assert.equal(latest(updates).metrics.find((metric) => metric.labelKey === 'metrics.heartRate')?.value, '78')
+  assert.equal(latest(updates).metrics.find((metric) => metric.labelKey === 'metrics.heartRate')?.value, '81')
 })
 
 test('marks a silent stream stale after one second and recovers on a valid frame', async () => {
