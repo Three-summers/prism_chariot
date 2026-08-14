@@ -25,7 +25,7 @@ test('maps maximum wire deviation and geometry into line protrusion dashboard', 
   const base = await mockDashboardDataProvider.getDashboard('lineProtrusion')
   const cases: DashboardCase[] = [{ ...base.cases[0], id: 'LPR-0001', typeKey: 'event.lineProtrusionAlarm' }]
 
-  const mapped = mapLineProtrusionResult(result(), base, cases, config, 'blob:video')
+  const mapped = mapLineProtrusionResult(result(), base, cases, config, 'blob:video', 12.3)
 
   assert.equal(mapped.media.kind, 'video')
   assert.equal(mapped.media.src, 'blob:video')
@@ -38,6 +38,7 @@ test('maps maximum wire deviation and geometry into line protrusion dashboard', 
   assert.equal(mapped.trend.unit, '°')
   assert.equal(mapped.trend.series[0].values.at(-1), 6)
   assert.equal(mapped.trend.series[1].values.at(-1), 5)
+  assert.equal(mapped.trend.labels.at(-1), '00:12.3')
   assert.equal(mapped.overlay.wires?.length, 1)
   assert.equal(mapped.overlay.wires?.[0].state, 'alarm')
   assert.equal(mapped.cases.length, 1)
@@ -46,12 +47,32 @@ test('maps maximum wire deviation and geometry into line protrusion dashboard', 
 
 test('maps normal and failed frames without creating synthetic CASE records', async () => {
   const base = await mockDashboardDataProvider.getDashboard('lineProtrusion')
-  const normal = mapLineProtrusionResult(result('ok'), base, [], config, 'blob:video')
-  const failed = mapLineProtrusionResult({ width: 1280, height: 720, wires: [], state: 'failed', error: 'tracking failed' }, base, [], config, 'blob:video')
+  const normal = mapLineProtrusionResult(result('ok'), base, [], config, 'blob:video', 0)
+  const failed = mapLineProtrusionResult({ width: 1280, height: 720, wires: [], state: 'failed', error: 'tracking failed' }, base, [], config, 'blob:video', 0.1)
 
   assert.equal(normal.overlay.detailKey, 'overlay.protrusionNormal')
   assert.equal(normal.metrics.find((item) => item.labelKey === 'metrics.eventLevel')?.tone, 'success')
   assert.equal(normal.cases.length, 0)
   assert.equal(failed.overlay.detailKey, 'overlay.detectionFailed')
   assert.equal(failed.cases.length, 0)
+})
+
+test('rolls line protrusion values through a fixed window at 10 Hz', async () => {
+  const base = await mockDashboardDataProvider.getDashboard('lineProtrusion')
+  const windowLength = base.trend.series[0].values.length
+
+  const first = mapLineProtrusionResult(result('alarm'), base, [], config, 'blob:video', 12.31)
+  assert.equal(first.trend.series[0].values.length, windowLength)
+  assert.deepEqual(first.trend.series[0].values.slice(0, -1), base.trend.series[0].values.slice(1))
+  assert.equal(first.trend.series[0].values.at(-1), 6)
+
+  const sameSample = mapLineProtrusionResult(result('ok'), first, [], config, 'blob:video', 12.34)
+  assert.deepEqual(sameSample.trend.series[0].values.slice(0, -1), first.trend.series[0].values.slice(0, -1))
+  assert.equal(sameSample.trend.series[0].values.at(-1), 0)
+
+  const nextSample = mapLineProtrusionResult(result('warning'), sameSample, [], config, 'blob:video', 12.41)
+  assert.equal(nextSample.trend.series[0].values.at(-2), 0)
+  assert.equal(nextSample.trend.series[0].values.at(-1), 3)
+  assert.equal(nextSample.trend.series[1].values.at(-1), 5)
+  assert.equal(nextSample.trend.labels.at(-1), '00:12.4')
 })

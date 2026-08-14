@@ -1,5 +1,6 @@
 import type { TranslationKey } from '../i18n/resources.ts'
 import type { DashboardCase, DashboardViewModel, MetricValue } from '../modules/types.ts'
+import { formatTrendTime } from '../components/dashboard/trendGeometry.ts'
 import type { LineProtrusionConfig, LineProtrusionDetectionResult, WireState } from './types.ts'
 
 export function mapLineProtrusionResult(
@@ -8,9 +9,13 @@ export function mapLineProtrusionResult(
   cases: DashboardCase[],
   config: LineProtrusionConfig,
   sourceUrl: string,
+  playbackSeconds: number,
 ): DashboardViewModel {
   const maximumDeviation = result.wires.reduce((maximum, wire) => Math.max(maximum, Math.abs(wire.deviationDeg)), 0)
   const state = result.state === 'failed' ? 'alarm' : result.state
+  const sampleLabel = formatTrendTime(playbackSeconds)
+  const lastLabel = baseViewModel.trend.labels[baseViewModel.trend.labels.length - 1]
+  const advanceWindow = lastLabel !== sampleLabel
   return {
     ...baseViewModel,
     media: {
@@ -24,9 +29,10 @@ export function mapLineProtrusionResult(
     trend: {
       ...baseViewModel.trend,
       unit: '°',
+      labels: updateWindow(baseViewModel.trend.labels, sampleLabel, advanceWindow),
       series: baseViewModel.trend.series.map((series, index) => ({
         ...series,
-        values: replaceLast(series.values, index === 0 ? maximumDeviation : config.alarmDeg),
+        values: updateWindow(series.values, index === 0 ? maximumDeviation : config.alarmDeg, advanceWindow),
       })),
     },
     cases: [...cases],
@@ -76,11 +82,10 @@ function toneForState(state: WireState): MetricValue['tone'] {
   return state === 'alarm' ? 'danger' : state === 'warning' ? 'warning' : 'success'
 }
 
-function replaceLast(values: number[], value: number): number[] {
+function updateWindow<T>(values: T[], value: T, advance: boolean): T[] {
   if (values.length === 0) return [value]
-  const next = [...values]
-  next[next.length - 1] = value
-  return next
+  if (advance) return [...values.slice(1), value]
+  return values.map((current, index) => index === values.length - 1 ? value : current)
 }
 
 function formatNumber(value: number): string {

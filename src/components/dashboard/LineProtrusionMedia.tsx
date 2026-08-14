@@ -8,7 +8,7 @@ import type { DashboardViewModel } from '../../modules/types'
 import { DetectionOverlay } from './DetectionOverlay'
 
 export interface LineProtrusionControls {
-  onDetection(result: LineProtrusionDetectionResult, config: LineProtrusionConfig, sourceUrl: string): void
+  onDetection(result: LineProtrusionDetectionResult, config: LineProtrusionConfig, sourceUrl: string, playbackSeconds: number): void
   onReset(): void
 }
 
@@ -181,9 +181,10 @@ export function LineProtrusionMedia({ viewModel, controls }: { viewModel: Dashbo
 
   function processCurrentFrame(): void {
     const frame = captureFrame()
-    if (!frame || !sourceUrl) return
+    const video = videoRef.current
+    if (!frame || !sourceUrl || !video) return
     const result = detectLineProtrusion(frame, session.current.calibrations, session.current.config)
-    controlsRef.current.onDetection(result, { ...session.current.config }, sourceUrl)
+    controlsRef.current.onDetection(result, { ...session.current.config }, sourceUrl, video.currentTime)
     setErrorKey(result.state === 'failed' ? 'status.trackingFailed' : undefined)
   }
 

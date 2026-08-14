@@ -1,6 +1,8 @@
 import { mockDashboardDataProvider } from '../data/DashboardDataProvider.ts'
 import type { DashboardViewModel } from '../modules/types.ts'
 
+export const LINE_PROTRUSION_TREND_WINDOW = 30
+
 export class LineProtrusionDataProvider {
   async getDashboard(): Promise<DashboardViewModel> {
     const base = await mockDashboardDataProvider.getDashboard('lineProtrusion')
@@ -18,9 +20,10 @@ export class LineProtrusionDataProvider {
       trend: {
         ...base.trend,
         unit: '°',
+        labels: Array.from({ length: LINE_PROTRUSION_TREND_WINDOW }, () => ''),
         series: base.trend.series.map((series, index) => ({
           ...series,
-          values: series.values.map(() => index === 0 ? 0 : 5),
+          values: Array.from({ length: LINE_PROTRUSION_TREND_WINDOW }, () => index === 0 ? 0 : 5),
         })),
       },
       overlay: {

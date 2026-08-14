@@ -9,7 +9,7 @@ import type {
 import type { TranslationKey } from '../i18n/resources.ts'
 
 const timestamp = '2026-08-12 10:25:52'
-const trendLabels = ['10:20', '10:21', '10:22', '10:23', '10:24', '10:25']
+const trendLabels = ['25:47', '25:48', '25:49', '25:50', '25:51', '25:52']
 
 const floors = [
   {

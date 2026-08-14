@@ -154,12 +154,12 @@ function DashboardApp() {
   }
 
   const lineProtrusionControls: LineProtrusionControls = {
-    onDetection: (result, config, sourceUrl) => {
+    onDetection: (result, config, sourceUrl, playbackSeconds) => {
       const timestamp = localTimestamp(new Date())
       const created = lineProtrusionTracker.current.next(result, timestamp)
       if (created.length) lineProtrusionCases.current = [...lineProtrusionCases.current, ...created]
       setViewModel((current) => current?.moduleId === 'lineProtrusion'
-        ? mapLineProtrusionResult(result, current, lineProtrusionCases.current, config, sourceUrl)
+        ? mapLineProtrusionResult(result, current, lineProtrusionCases.current, config, sourceUrl, playbackSeconds)
         : current)
     },
     onReset: () => {
