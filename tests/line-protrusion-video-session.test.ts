@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { DEFAULT_MEDIA } from '../src/config/defaultMedia.ts'
 import { LineProtrusionVideoSession } from '../src/lineProtrusion/videoSession.ts'
 import type { WireCalibration } from '../src/lineProtrusion/types.ts'
 
@@ -12,6 +13,24 @@ const secondCalibration: WireCalibration = {
   wire: 1,
   spots: [{ x: 0.2, y: 0.7 }, { x: 0.5, y: 0.7 }, { x: 0.8, y: 0.7 }],
 }
+
+test('loads a configured video URL without revoking the public resource', () => {
+  const revoked: string[] = []
+  const session = new LineProtrusionVideoSession({
+    createObjectUrl: () => 'blob:uploaded-video',
+    revokeObjectUrl: (url) => revoked.push(url),
+  })
+  const loadUrl = (session as LineProtrusionVideoSession & { loadUrl?: (url: string) => string }).loadUrl?.bind(session)
+
+  const sourceUrl = loadUrl?.(DEFAULT_MEDIA.lineProtrusion.src)
+
+  assert.equal(sourceUrl, DEFAULT_MEDIA.lineProtrusion.src)
+  assert.equal(session.status, 'ready')
+  session.load(new Blob(['video'], { type: 'video/mp4' }))
+  assert.deepEqual(revoked, [])
+  session.dispose()
+  assert.deepEqual(revoked, ['blob:uploaded-video'])
+})
 
 test('replaces video URLs, resets calibration, and releases the active URL', () => {
   const revoked: string[] = []

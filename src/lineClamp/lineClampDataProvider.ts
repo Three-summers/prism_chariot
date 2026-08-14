@@ -1,4 +1,5 @@
 import rawCalibrationData from '../../docs/reference_program/线夹识别/calibration.json' with { type: 'json' }
+import { DEFAULT_MEDIA } from '../config/defaultMedia.ts'
 import { mockDashboardDataProvider } from '../data/DashboardDataProvider.ts'
 import type { DashboardViewModel } from '../modules/types.ts'
 import { LineClampDetector } from './detector.ts'
@@ -6,8 +7,8 @@ import { basename, parseCalibrationData } from './calibration.ts'
 import { mapLineClampResult } from './lineClampViewModel.ts'
 import type { LineClampDetectionResult, LineClampImageData } from './types.ts'
 
-export const LINE_CLAMP_SAMPLE_URL = '/resources/line-clamp-sample.jpg'
-export const LINE_CLAMP_SAMPLE_FILENAME = 'camera_0_20260420_202604_100_VideoCap_1.jpg'
+export const LINE_CLAMP_SAMPLE_URL = DEFAULT_MEDIA.lineClamp.src
+export const LINE_CLAMP_SAMPLE_FILENAME = DEFAULT_MEDIA.lineClamp.filename
 
 const calibrations = parseCalibrationData(rawCalibrationData)
 
@@ -25,15 +26,15 @@ interface LineClampProviderDependencies {
   decode(blob: Blob): Promise<LineClampImageData>
   createSourceUrl(blob: Blob): string | Promise<string>
   revokeSourceUrl(url: string): void
-  loadSample(): Promise<Blob>
+  loadSample(sourceUrl: string): Promise<Blob>
 }
 
 const browserDependencies: LineClampProviderDependencies = {
   decode: decodeImageBlob,
   createSourceUrl: (blob) => URL.createObjectURL(blob),
   revokeSourceUrl: (url) => URL.revokeObjectURL(url),
-  async loadSample() {
-    const response = await fetch(LINE_CLAMP_SAMPLE_URL)
+  async loadSample(sourceUrl) {
+    const response = await fetch(sourceUrl)
     if (!response.ok) throw new Error(`Unable to load line-clamp sample (${response.status})`)
     return response.blob()
   },
@@ -56,7 +57,7 @@ export class LineClampDataProvider {
   async inspect(input?: LineClampInput): Promise<LineClampDashboardResult> {
     const requestId = ++this.requestSequence
     const base = await mockDashboardDataProvider.getDashboard('lineClamp')
-    const blob = input?.file ?? await this.dependencies.loadSample()
+    const blob = input?.file ?? await this.dependencies.loadSample(LINE_CLAMP_SAMPLE_URL)
     const filename = input?.filename || LINE_CLAMP_SAMPLE_FILENAME
     const image = await this.dependencies.decode(blob)
     const sourceUrl = input ? await this.createInputUrl(blob, requestId) : LINE_CLAMP_SAMPLE_URL

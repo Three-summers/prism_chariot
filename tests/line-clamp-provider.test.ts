@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { DEFAULT_MEDIA } from '../src/config/defaultMedia.ts'
 import { LineClampDataProvider } from '../src/lineClamp/lineClampDataProvider.ts'
 import type { LineClampImageData } from '../src/lineClamp/types.ts'
 
@@ -19,6 +20,24 @@ function syntheticClamp(): LineClampImageData {
   }
   return { data, width, height }
 }
+
+test('loads the configured line-clamp image when no upload is provided', async () => {
+  let requestedUrl = ''
+  const provider = new LineClampDataProvider({
+    decode: async () => syntheticClamp(),
+    createSourceUrl: () => 'blob:unused',
+    revokeSourceUrl: () => undefined,
+    loadSample: async (sourceUrl: string) => {
+      requestedUrl = sourceUrl
+      return new Blob(['default-image'])
+    },
+  })
+
+  const dashboard = await provider.getDashboard()
+
+  assert.equal(requestedUrl, DEFAULT_MEDIA.lineClamp.src)
+  assert.equal(dashboard.media.src, DEFAULT_MEDIA.lineClamp.src)
+})
 
 test('decodes input and returns a real line-clamp image view model', async () => {
   const provider = new LineClampDataProvider({

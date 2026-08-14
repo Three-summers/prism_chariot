@@ -1,3 +1,4 @@
+import { DEFAULT_MEDIA } from '../config/defaultMedia.ts'
 import type { DashboardViewModel, ModuleId } from '../modules/types.ts'
 import { mockDashboardData } from './mockDashboardData.ts'
 
@@ -7,6 +8,15 @@ export interface DashboardDataProvider {
 
 export const mockDashboardDataProvider: DashboardDataProvider = {
   async getDashboard(moduleId) {
-    return structuredClone(mockDashboardData[moduleId])
+    const dashboard = structuredClone(mockDashboardData[moduleId])
+    const media = DEFAULT_MEDIA[moduleId]
+    if (media.kind === 'stream') return dashboard
+    dashboard.media = {
+      ...dashboard.media,
+      kind: media.kind,
+      src: media.src,
+      ...(media.kind === 'image' ? { sourceWidth: media.width, sourceHeight: media.height } : {}),
+    }
+    return dashboard
   },
 }

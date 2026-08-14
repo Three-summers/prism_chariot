@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { DEFAULT_MEDIA } from '../src/config/defaultMedia.ts'
 import { MagneticPlateDataProvider } from '../src/magneticPlate/magneticPlateDataProvider.ts'
 import type { MagneticPlateImageData } from '../src/magneticPlate/types.ts'
 
@@ -20,18 +21,26 @@ function stripedImage(): MagneticPlateImageData {
   return { data, width, height }
 }
 
-test('returns neutral data before an image is selected and real image data after inspection', async () => {
+test('inspects the configured image before accepting an uploaded replacement', async () => {
+  let requestedUrl = ''
   const provider = new MagneticPlateDataProvider({
     decode: async () => stripedImage(),
     createSourceUrl: () => 'blob:plate',
     revokeSourceUrl: () => undefined,
+    loadDefaultMedia: async (sourceUrl: string) => {
+      requestedUrl = sourceUrl
+      return new Blob(['default-plate'])
+    },
   })
 
   const initial = await provider.getDashboard()
   const inspected = await provider.inspect(new Blob(['plate']))
 
+  assert.equal(requestedUrl, DEFAULT_MEDIA.magneticPlate.src)
   assert.equal(initial.moduleId, 'magneticPlate')
-  assert.equal(initial.media.kind, undefined)
+  assert.equal(initial.media.kind, 'image')
+  assert.equal(initial.media.src, DEFAULT_MEDIA.magneticPlate.src)
+  assert.equal(initial.overlay.detailKey, 'overlay.magneticPlateNormal')
   assert.equal(initial.cases.length, 0)
   assert.equal(inspected.detection.status, 'normal')
   assert.equal(inspected.viewModel.media.kind, 'image')

@@ -1,3 +1,4 @@
+import { DEFAULT_MEDIA } from '../config/defaultMedia.ts'
 import { mockDashboardDataProvider } from '../data/DashboardDataProvider.ts'
 import type { DashboardViewModel } from '../modules/types.ts'
 import { MagneticPlateDetector } from './detector.ts'
@@ -12,12 +13,18 @@ interface MagneticPlateProviderDependencies {
   decode(blob: Blob): Promise<MagneticPlateImageData>
   createSourceUrl(blob: Blob): string | Promise<string>
   revokeSourceUrl(url: string): void
+  loadDefaultMedia(sourceUrl: string): Promise<Blob>
 }
 
 const browserDependencies: MagneticPlateProviderDependencies = {
   decode: decodeImageBlob,
   createSourceUrl: (blob) => URL.createObjectURL(blob),
   revokeSourceUrl: (url) => URL.revokeObjectURL(url),
+  async loadDefaultMedia(sourceUrl) {
+    const response = await fetch(sourceUrl)
+    if (!response.ok) throw new Error(`Unable to load magnetic-plate sample (${response.status})`)
+    return response.blob()
+  },
 }
 
 export class MagneticPlateDataProvider {
@@ -31,12 +38,17 @@ export class MagneticPlateDataProvider {
   }
 
   async getDashboard(): Promise<DashboardViewModel> {
-    return neutralMagneticPlateDashboard(await mockDashboardDataProvider.getDashboard('magneticPlate'))
+    const media = DEFAULT_MEDIA.magneticPlate
+    const blob = await this.dependencies.loadDefaultMedia(media.src)
+    const base = await this.getNeutralDashboard()
+    const image = await this.dependencies.decode(blob)
+    const detection = this.detector.detect(image)
+    return mapMagneticPlateResult(detection, base, media.src)
   }
 
   async inspect(file: Blob): Promise<MagneticPlateDashboardResult> {
     const requestId = ++this.requestSequence
-    const base = await this.getDashboard()
+    const base = await this.getNeutralDashboard()
     const image = await this.dependencies.decode(file)
     const sourceUrl = await this.createInputUrl(file, requestId)
     const detection = this.detector.detect(image)
@@ -59,6 +71,10 @@ export class MagneticPlateDataProvider {
     if (this.activeObjectUrl) this.dependencies.revokeSourceUrl(this.activeObjectUrl)
     this.activeObjectUrl = sourceUrl
     return sourceUrl
+  }
+
+  private async getNeutralDashboard(): Promise<DashboardViewModel> {
+    return neutralMagneticPlateDashboard(await mockDashboardDataProvider.getDashboard('magneticPlate'))
   }
 }
 

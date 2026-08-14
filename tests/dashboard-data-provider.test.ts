@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { DEFAULT_MEDIA } from '../src/config/defaultMedia.ts'
 import { mockDashboardDataProvider } from '../src/data/DashboardDataProvider.ts'
 import { MODULE_IDS, moduleDefinitions } from '../src/modules/registry.ts'
 
@@ -31,4 +32,18 @@ test('returns isolated data so UI edits do not mutate mock fixtures', async () =
   const second = await mockDashboardDataProvider.getDashboard('lifeSensing')
   assert.notEqual(second.metrics[0].value, 'changed')
   assert.notEqual(second.cases[0].owner, 'changed')
+})
+
+test('applies configured image and video sources to dashboard media', async () => {
+  for (const id of ['lineClamp', 'lineProtrusion', 'magneticPlate', 'infraredTemperature'] as const) {
+    const dashboard = await mockDashboardDataProvider.getDashboard(id)
+    const configured = DEFAULT_MEDIA[id]
+
+    assert.equal(dashboard.media.kind, configured.kind)
+    assert.equal(dashboard.media.src, configured.src)
+    if (configured.kind === 'image') {
+      assert.equal(dashboard.media.sourceWidth, configured.width)
+      assert.equal(dashboard.media.sourceHeight, configured.height)
+    }
+  }
 })

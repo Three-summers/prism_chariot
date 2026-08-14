@@ -26,6 +26,7 @@ export class LineProtrusionVideoSession {
   calibrations: WireCalibration[] = []
   config: LineProtrusionConfig = { warningDeg: 2, alarmDeg: 5, sensitivity: 1 }
   private readonly dependencies: VideoSessionDependencies
+  private ownsSourceUrl = false
 
   constructor(dependencies: Partial<VideoSessionDependencies> = {}) {
     this.dependencies = { ...browserDependencies, ...dependencies }
@@ -39,8 +40,18 @@ export class LineProtrusionVideoSession {
       return undefined
     }
     this.sourceUrl = this.dependencies.createObjectUrl(file)
+    this.ownsSourceUrl = true
     this.status = 'ready'
     return this.sourceUrl
+  }
+
+  loadUrl(sourceUrl: string): string {
+    this.releaseUrl()
+    this.calibrations = []
+    this.sourceUrl = sourceUrl
+    this.ownsSourceUrl = false
+    this.status = 'ready'
+    return sourceUrl
   }
 
   beginCalibration(): boolean {
@@ -96,8 +107,9 @@ export class LineProtrusionVideoSession {
 
   private releaseUrl(): void {
     if (!this.sourceUrl) return
-    this.dependencies.revokeObjectUrl(this.sourceUrl)
+    if (this.ownsSourceUrl) this.dependencies.revokeObjectUrl(this.sourceUrl)
     this.sourceUrl = undefined
+    this.ownsSourceUrl = false
   }
 }
 

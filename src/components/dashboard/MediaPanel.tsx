@@ -6,6 +6,7 @@ import type { BatchControls } from './DashboardShell'
 import { DetectionOverlay } from './DetectionOverlay'
 import { LineProtrusionMedia, type LineProtrusionControls } from './LineProtrusionMedia'
 import { LifeSensingMedia, type LifeSensingControls } from './LifeSensingMedia'
+import { imageAltKeyForModule } from './mediaLabels'
 
 export interface MagneticPlateControls {
   onImage(file: File): void
@@ -38,7 +39,7 @@ export function MediaPanel({ viewModel, batchControls, lineProtrusionControls, m
       <input ref={imageInput} className="directory-input" name="magneticPlateImage" type="file" accept="image/*" onChange={(event) => { const file = event.target.files?.[0]; if (file) magneticPlateControls.onImage(file); event.target.value = '' }} />
     </div> : <span className="live-meta">{media.speed} m/s　↑ {t(media.directionKey)}　{t(media.modeKey)}</span>}<span className="online"><i />{t('status.online')}</span></div>
     <div className="scene">
-      {media.kind === 'image' && media.src && media.sourceWidth && media.sourceHeight ? <div className="scene-image-frame" style={{ '--image-ratio': media.sourceWidth / media.sourceHeight } as CSSProperties}><img src={media.src} alt={t(viewModel.moduleId === 'magneticPlate' ? 'media.magneticPlateImage' : 'media.lineClampImage')} /><DetectionOverlay overlay={overlay} /></div> : <><div className="scene-placeholder"><div className="placeholder-grid" /><div className="camera-ring"><span>{t('media.live')}</span></div><strong>{t('media.placeholderTitle')}</strong><small>{t('media.placeholderDescription', { device: media.deviceId, area: media.areaKey ? t(media.areaKey) : text(media.area) })}</small></div><DetectionOverlay overlay={overlay} /></>}
+      {media.kind === 'image' && media.src && media.sourceWidth && media.sourceHeight ? <div className="scene-image-frame" style={{ '--image-ratio': media.sourceWidth / media.sourceHeight } as CSSProperties}><img src={media.src} alt={t(imageAltKeyForModule(viewModel.moduleId))} /><DetectionOverlay overlay={overlay} /></div> : <><div className="scene-placeholder"><div className="placeholder-grid" /><div className="camera-ring"><span>{t('media.live')}</span></div><strong>{t('media.placeholderTitle')}</strong><small>{t('media.placeholderDescription', { device: media.deviceId, area: media.areaKey ? t(media.areaKey) : text(media.area) })}</small></div><DetectionOverlay overlay={overlay} /></>}
       {mediaError ? <div className="media-error" role="alert"><span>{t(viewModel.moduleId === 'magneticPlate' ? 'status.magneticPlateLoadError' : 'status.lineClampLoadError')}</span></div> : null}
     </div>
   </>

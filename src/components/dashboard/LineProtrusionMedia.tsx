@@ -31,9 +31,13 @@ export function LineProtrusionMedia({ viewModel, controls }: { viewModel: Dashbo
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const frameRequest = useRef<{ kind: 'video' | 'animation'; id: number } | null>(null)
-  const [sourceUrl, setSourceUrl] = useState<string>()
+  const [sourceUrl, setSourceUrl] = useState<string | undefined>(() => (
+    viewModel.media.kind === 'video' && viewModel.media.src
+      ? session.current.loadUrl(viewModel.media.src)
+      : undefined
+  ))
   const [videoRatio, setVideoRatio] = useState(16 / 9)
-  const [status, setStatus] = useState<LineProtrusionSessionStatus>('idle')
+  const [status, setStatus] = useState<LineProtrusionSessionStatus>(() => session.current.status)
   const [config, setConfig] = useState<LineProtrusionConfig>({ ...session.current.config })
   const [calibrations, setCalibrations] = useState<WireCalibration[]>([])
   const [activeWire, setActiveWire] = useState<WireIndex>()
