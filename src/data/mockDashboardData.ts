@@ -177,12 +177,12 @@ export const mockDashboardData: Record<ModuleId, DashboardViewModel> = {
     'infraredTemperature', 'E1-009',
     metrics([
       ['metrics.inspectionStatus', 'common.inspecting'], ['metrics.deviceId', 'GL-01'], ['metrics.floor', '1F'], ['metrics.point', 'E1-009'],
-      ['metrics.currentTemperature', '68.7', '°C', 'danger'], ['metrics.threshold', '60', '°C'], ['metrics.temperatureRise', '12.4', '°C'], ['metrics.eventLevel', 'common.red', undefined, 'danger'],
+      ['metrics.currentTemperature', '38.6', '°C', 'danger'], ['metrics.threshold', '37.3', '°C'], ['metrics.temperatureRise', '1.8', '°C'], ['metrics.eventLevel', 'common.red', undefined, 'danger'],
     ]),
     'trend.temperature', '°C',
-    series([['trend.temperature', 'primary', [43, 47, 50, 55, 62, 68.7]], ['trend.threshold', 'threshold', [60, 60, 60, 60, 60, 60]]]),
+    series([['trend.temperature', 'primary', [36.8, 37.0, 37.2, 37.5, 38.1, 38.6]], ['trend.threshold', 'threshold', [37.3, 37.3, 37.3, 37.3, 37.3, 37.3]]]),
     ['event.temperatureHigh', 'event.temperatureRise', 'event.hotspot'],
-    overlay('infrared', 'overlay.infrared', 'overlay.temperature', [['overlay.temperature', '68.7', '°C'], ['metrics.threshold', '60', '°C'], ['metrics.point', 'E1-009']]),
+    overlay('infrared', 'overlay.infrared', 'overlay.temperature', [['overlay.temperature', '38.6', '°C'], ['metrics.threshold', '37.3', '°C'], ['metrics.point', 'E1-009']]),
     'areas.infraredTemperature',
   ),
   lifeSensing: dashboard(

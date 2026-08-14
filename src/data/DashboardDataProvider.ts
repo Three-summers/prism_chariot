@@ -17,6 +17,9 @@ export const mockDashboardDataProvider: DashboardDataProvider = {
       src: media.src,
       ...(media.kind === 'image' ? { sourceWidth: media.width, sourceHeight: media.height } : {}),
     }
+    if (media.kind === 'image' && 'targets' in media && media.targets) {
+      dashboard.overlay.targets = structuredClone(media.targets)
+    }
     return dashboard
   },
 }

@@ -82,6 +82,11 @@ export interface DetectionStripe extends DetectionBox {
   state: 'normal' | 'warped'
 }
 export interface DetectionGap extends DetectionBox {}
+export interface ThermalTarget extends DetectionBox {
+  id: string
+  temperatureC: number
+  state: 'normal' | 'alarm'
+}
 export interface DetectionOverlayModel {
   kind: DetectionOverlayKind
   titleKey: TranslationKey
@@ -91,6 +96,7 @@ export interface DetectionOverlayModel {
   wires?: DetectionWire[]
   stripes?: DetectionStripe[]
   gap?: DetectionGap
+  targets?: ThermalTarget[]
 }
 export interface ResolutionDefaults {
   conclusions: TranslationKey[]

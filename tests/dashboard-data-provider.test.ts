@@ -47,3 +47,22 @@ test('applies configured image and video sources to dashboard media', async () =
     }
   }
 })
+
+test('maps the infrared person target and body temperature into the dashboard', async () => {
+  const dashboard = await mockDashboardDataProvider.getDashboard('infraredTemperature')
+  const metrics = Object.fromEntries(dashboard.metrics.map((metric) => [metric.labelKey, metric.value]))
+
+  assert.equal(dashboard.media.src, '/resources/infrared-person-sample.jpg')
+  assert.equal(dashboard.media.sourceHeight, 1840)
+  assert.deepEqual(dashboard.overlay.targets, [{
+    id: 'P01',
+    x: 0.43,
+    y: 0.595,
+    width: 0.42,
+    height: 0.386,
+    temperatureC: 38.6,
+    state: 'alarm',
+  }])
+  assert.equal(metrics['metrics.currentTemperature'], '38.6')
+  assert.equal(metrics['metrics.threshold'], '37.3')
+})

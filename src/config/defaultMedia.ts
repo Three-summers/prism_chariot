@@ -1,4 +1,4 @@
-import type { ModuleId } from '../modules/types.ts'
+import type { ModuleId, ThermalTarget } from '../modules/types.ts'
 
 interface DefaultImageMedia {
   kind: 'image'
@@ -6,6 +6,7 @@ interface DefaultImageMedia {
   width: number
   height: number
   filename?: string
+  targets?: ThermalTarget[]
 }
 
 interface DefaultVideoMedia {
@@ -44,8 +45,17 @@ export const DEFAULT_MEDIA = {
   },
   infraredTemperature: {
     kind: 'image',
-    src: '/resources/infrared-temperature-sample.png',
-    width: 1486,
-    height: 1059,
+    src: '/resources/infrared-person-sample.jpg',
+    width: 1080,
+    height: 1840,
+    targets: [{
+      id: 'P01',
+      x: 0.43,
+      y: 0.595,
+      width: 0.42,
+      height: 0.386,
+      temperatureC: 38.6,
+      state: 'alarm',
+    }],
   },
 } satisfies Record<ModuleId, DefaultMediaSource>
