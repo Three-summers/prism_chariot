@@ -71,12 +71,19 @@ export interface DetectionBox {
   width: number
   height: number
 }
+export interface DetectionWire {
+  wire: 0 | 1
+  spots: [{ x: number; y: number }, { x: number; y: number }, { x: number; y: number }]
+  deviationDeg: number
+  state: 'ok' | 'warning' | 'alarm'
+}
 export interface DetectionOverlayModel {
   kind: DetectionOverlayKind
   titleKey: TranslationKey
   detailKey: TranslationKey
   stats: OverlayStat[]
   detectionBox?: DetectionBox
+  wires?: DetectionWire[]
 }
 export interface ResolutionDefaults {
   conclusions: TranslationKey[]
@@ -97,7 +104,7 @@ export interface DashboardViewModel {
     directionKey: TranslationKey
     modeKey: TranslationKey
     /** The existing placeholder remains the default for mock modules. */
-    kind?: 'placeholder' | 'image'
+    kind?: 'placeholder' | 'image' | 'video'
     src?: string
     sourceWidth?: number
     sourceHeight?: number
