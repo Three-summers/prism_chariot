@@ -70,3 +70,17 @@ export interface LifeSensingSnapshot {
   points: RadarPoint[]
   people: PersonSnapshot[]
 }
+
+export type LifeSensingStreamStatus = 'connecting' | 'streaming' | 'stale' | 'error' | 'stopped'
+
+export interface LifeSensingByteSink {
+  onBytes(chunk: Uint8Array): void
+  onStatus(status: LifeSensingStreamStatus): void
+  onError(error: Error): void
+}
+
+export interface LifeSensingByteSource {
+  readonly kind: 'simulated' | 'serial'
+  start(sink: LifeSensingByteSink): Promise<void> | void
+  stop(): Promise<void> | void
+}
