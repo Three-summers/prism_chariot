@@ -38,7 +38,7 @@ export function LifeSensingMedia({ viewModel, controls }: { viewModel: Dashboard
   return <>
     <div className="live-heading life-heading">
       <span>{t('panels.liveView')}</span><b>|</b>
-      <span>{t(scene.sourceKind === 'simulated' ? 'life.source.simulated' : 'life.source.serial')}</span><b>|</b>
+      <span>{scene.sourceKind === 'simulated' ? viewModel.media.deviceId : t('life.source.serial')}</span><b>|</b>
       <span className="live-stamp">{viewModel.timestamp}</span>
       <div className="life-target-switcher" aria-label={t('life.radar')}>{scene.people.map((person) => <button
         type="button"

@@ -4,6 +4,9 @@ import { translationResources } from '../src/i18n/resources.ts'
 import { translate } from '../src/i18n/translate.ts'
 
 test('translates representative navigation, panel, and action labels', () => {
+  assert.equal(translate('zh', 'brand.name'), '光棱战车:AMHS轨道影像辨识系统')
+  assert.equal(translate('zh', 'modules.lineClamp'), '线夹识别')
+  assert.equal(translate('zh', 'panels.factoryOverview'), 'FAB 导览')
   assert.equal(translate('zh', 'modules.lifeSensing'), '生命感知')
   assert.equal(translate('en', 'modules.lifeSensing'), 'Life Sensing')
   assert.equal(translate('zh', 'panels.caseRecords'), 'CASE记录')
@@ -11,8 +14,8 @@ test('translates representative navigation, panel, and action labels', () => {
 })
 
 test('translates life-sensing stream, target, and state labels', () => {
-  assert.equal(translate('zh', 'life.source.simulated'), '模拟串口')
-  assert.equal(translate('en', 'life.source.simulated'), 'Simulated serial')
+  assert.equal(translate('zh', 'life.source.simulated'), 'AN0111')
+  assert.equal(translate('en', 'life.source.simulated'), 'AN0111')
   assert.equal(translate('zh', 'life.state.fallen'), '人员跌倒')
   assert.equal(translate('en', 'life.target', { id: 2 }), 'Person 2')
 })

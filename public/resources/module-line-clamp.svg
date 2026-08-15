@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <title>线卡识别</title>
-  <desc>带扫描定位框的轨道线卡轮廓</desc>
+  <title>线夹识别</title>
+  <desc>带扫描定位框的轨道线夹轮廓</desc>
   <g stroke="#27B7FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
     <path d="M8 21v-7a6 6 0 0 1 6-6h7M43 8h7a6 6 0 0 1 6 6v7M56 43v7a6 6 0 0 1-6 6h-7M21 56h-7a6 6 0 0 1-6-6v-7" opacity=".92"/>
     <path d="M14 24h36"/>

@@ -6,7 +6,7 @@ export class LineProtrusionCaseTracker {
   private readonly previous = new Map<WireIndex, WireState>([[0, 'ok'], [1, 'ok']])
   private readonly point: string
 
-  constructor(point = 'C1-118') {
+  constructor(point = 'LIT-118') {
     this.point = point
   }
 
@@ -39,7 +39,7 @@ export class LineProtrusionCaseTracker {
       typeKey: alarm ? 'event.lineProtrusionAlarm' : 'event.lineProtrusionWarning',
       stateKey: 'common.processing',
       stateTone: 'processing',
-      owner: '-',
+      owner: 'YZU',
       updated: timestamp.slice(11),
     }
   }

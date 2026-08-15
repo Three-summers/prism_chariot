@@ -61,11 +61,11 @@ export class LifeSensingCaseTracker {
       levelKey: fallen ? 'common.red' : 'common.orange',
       color: fallen ? 'red' : 'orange',
       time: timestamp,
-      spot: `B1-086 / P${person.id}`,
+      spot: `LIT-086 / P${person.id}`,
       typeKey: eventKey(person.state),
       stateKey: 'common.processing',
       stateTone: 'processing',
-      owner: '-',
+      owner: 'YZU',
       updated: timestamp.slice(11),
     }
   }

@@ -42,7 +42,7 @@ test('tracks active anomaly severity independently for each person', () => {
 
   const created = tracker.update([person(1, 'motionless'), person(2, 'breathHold')], '2026-08-14 10:00:00')
   assert.equal(created.length, 2)
-  assert.deepEqual(created.map((item) => item.spot), ['B1-086 / P1', 'B1-086 / P2'])
+  assert.deepEqual(created.map((item) => item.spot), ['LIT-086 / P1', 'LIT-086 / P2'])
   assert.equal(tracker.update([person(1, 'motionless'), person(2, 'fallen')], '2026-08-14 10:00:01').length, 1)
 })
 

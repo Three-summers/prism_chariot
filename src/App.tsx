@@ -248,7 +248,7 @@ function failedCase(sequence: number, relativePath: string, timestamp: string): 
     id: `LCL-${String(sequence).padStart(4, '0')}`,
     levelKey: 'common.red', color: 'red', time: timestamp, spot: relativePath,
     typeKey: 'event.detectionFailed', stateKey: 'common.processing', stateTone: 'processing',
-    owner: '-', updated: timestamp.slice(11),
+    owner: 'YZU', updated: timestamp.slice(11),
   }
 }
 

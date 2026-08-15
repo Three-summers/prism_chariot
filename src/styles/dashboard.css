@@ -6,12 +6,12 @@ body {
 .stage { width: 100%; height: 100%; overflow: hidden; display: grid; place-items: center; }
 .app-shell { width: var(--design-w); height: var(--design-h); padding: 14px 18px 18px; overflow: hidden; transform: scale(var(--ui-scale)); transform-origin: center; }
 .topbar { height: 62px; display: flex; align-items: center; gap: 14px; }
-.brand { width: 210px; flex: 0 0 210px; display: flex; align-items: center; gap: 9px; }
-.brand img { width: 48px; height: 46px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .18)); }
-.brand strong { display: block; color: var(--text-primary); font-size: 19px; letter-spacing: 1px; line-height: 1.2; }
+.brand { width: 384px; flex: 0 0 384px; display: flex; align-items: center; gap: 9px; }
+.brand img { width: 42px; height: 42px; object-fit: contain; }
+.brand strong { display: block; color: var(--text-primary); font-size: 17px; letter-spacing: 0; line-height: 1.2; white-space: nowrap; }
 .brand small { display: block; color: var(--text-muted); font-size: 10px; letter-spacing: 1.4px; margin-top: 3px; white-space: nowrap; }
 nav { flex: 1; display: flex; justify-content: center; gap: 6px; }
-.module-tab { min-width: 110px; height: 42px; padding: 0 13px; border: 1px solid var(--border-normal); border-radius: 5px; background: linear-gradient(180deg, var(--surface-raised), var(--surface-soft)); display: inline-flex; align-items: center; justify-content: center; gap: 7px; color: var(--text-secondary); font-size: 13px; transition: border-color .18s, background .18s, transform .18s; white-space: nowrap; }
+.module-tab { min-width: 112px; height: 42px; padding: 0 12px; border: 1px solid var(--border-normal); border-radius: 5px; background: linear-gradient(180deg, var(--surface-raised), var(--surface-soft)); display: inline-flex; align-items: center; justify-content: center; gap: 7px; color: var(--text-secondary); font-size: 15px; transition: border-color .18s, background .18s, transform .18s; white-space: nowrap; }
 .module-tab:hover { border-color: var(--module-accent); transform: translateY(-1px); }
 .module-tab.active { color: #fff; border-color: var(--module-accent); background: linear-gradient(135deg, rgba(var(--module-accent-rgb), .62), rgba(var(--module-accent-rgb), .24)); box-shadow: inset 0 0 18px rgba(var(--module-accent-rgb), .18), 0 0 13px rgba(var(--module-accent-rgb), .16); }
 :root[data-theme='light'] .module-tab.active { color: var(--text-primary); font-weight: 600; }
@@ -38,8 +38,8 @@ nav { flex: 1; display: flex; justify-content: center; gap: 6px; }
 .map-frame { flex: 1; min-height: 0; position: relative; margin: 10px 12px 12px; overflow: hidden; border: 1px solid var(--border-subtle); background: var(--surface-soft); }
 .route-map { width: 100%; height: 100%; display: block; }.map-base { fill: var(--surface-soft); }.map-grid-pattern { opacity: .65; }
 .route-map defs path { fill: none; stroke: var(--map-grid); stroke-width: .6; }
-.route-map .zone-box { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.2; }.route-map .zone-box.current { fill: var(--accent-soft); stroke: var(--module-accent); }
-.route-map .zone text { fill: var(--text-secondary); font-size: 12px; }.route-map .route-track, .route-map .route-flow, .route-map .arrow { fill: none; stroke: var(--module-accent); stroke-width: 3; filter: drop-shadow(0 0 4px rgba(var(--module-accent-rgb), .7)); }
+.route-map .zone-box { fill: var(--surface); fill-opacity: .6; stroke: var(--border-strong); stroke-width: 1.2; }.route-map .zone-box.current { fill: var(--accent-soft); stroke: var(--module-accent); }
+.route-map .zone text { fill: var(--text-primary); font-size: 11px; font-weight: 600; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }.route-map .network-track { fill: none; stroke: var(--border-strong); stroke-width: 2; opacity: .7; }.route-map .network-node { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1; }.route-map .route-track, .route-map .route-flow, .route-map .arrow { fill: none; stroke: var(--module-accent); stroke-width: 3; filter: drop-shadow(0 0 4px rgba(var(--module-accent-rgb), .7)); }
 .route-map .route-flow { stroke: var(--text-primary); stroke-width: 1.3; stroke-dasharray: 8 14; filter: none; animation: track-flow 1.4s linear infinite; }.route-map .arrow { stroke-width: 1.4; }
 .route-map .vehicle-pulse { fill: var(--surface); stroke: var(--module-accent); stroke-width: 2; animation: pulse-ring 1.8s ease-out infinite; }.route-map .vehicle-dot { fill: var(--warning); }
 .route-map .vehicle-label { fill: var(--surface); stroke: var(--border-strong); stroke-width: .8; }.route-map .vehicle text { fill: var(--text-primary); font-size: 10px; }

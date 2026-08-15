@@ -1,42 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <title>光棱战车棱镜核心 Logo</title>
-  <desc>由青蓝棱镜核心、紫色能量切面和向前展开的光束构成的品牌符号</desc>
-  <defs>
-    <linearGradient id="beam" x1="30" y1="32" x2="61" y2="32" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#80F2FF"/>
-      <stop offset=".52" stop-color="#25BFFF"/>
-      <stop offset="1" stop-color="#7C5CFF"/>
-    </linearGradient>
-    <linearGradient id="faceLight" x1="8" y1="18" x2="29" y2="33" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#C7FAFF" stop-opacity=".34"/>
-      <stop offset="1" stop-color="#38D9FF" stop-opacity=".08"/>
-    </linearGradient>
-    <linearGradient id="faceDark" x1="28" y1="8" x2="42" y2="52" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2AC7FF" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#176BFF" stop-opacity=".06"/>
-    </linearGradient>
-    <linearGradient id="energy" x1="23" y1="27" x2="37" y2="39" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#B8A0FF"/>
-      <stop offset="1" stop-color="#7047FF"/>
-    </linearGradient>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="1.8" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-
-  <g stroke="url(#beam)" stroke-linecap="round" filter="url(#glow)">
-    <path d="M34 26.5 58.5 18" stroke-width="2.4"/>
-    <path d="M35 31.5h26" stroke-width="2.8"/>
-    <path d="M34 36.5 57 45" stroke-width="2.4"/>
+  <title>光棱战车棱镜 Logo</title>
+  <desc>简洁的三角棱镜与三道折射光线</desc>
+  <path d="M7 51 27 13l20 38Z" fill="#0B2635" stroke="#79E9F7" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M27 13v38M7 51h40" stroke="#30BDD8" stroke-width="1.5" opacity=".72"/>
+  <g stroke-linecap="round" stroke-width="3">
+    <path d="M47 42 61 33" stroke="#78EAF7"/>
+    <path d="M47 46h14" stroke="#43B8FF"/>
+    <path d="M47 50l14 9" stroke="#A77BFF"/>
   </g>
-
-  <path d="M7.5 18.5 28 7l17.5 10.5L41 45 24 56.5 7.5 45Z" fill="#071B29" stroke="#81EFFF" stroke-width="2.4" stroke-linejoin="round"/>
-  <path d="M7.5 18.5 27.5 30.5 28 7Z" fill="url(#faceLight)"/>
-  <path d="M28 7 45.5 17.5 27.5 30.5Z" fill="url(#faceDark)"/>
-  <path d="M7.5 18.5 27.5 30.5 24 56.5 7.5 45Z" fill="#0A2B3D" fill-opacity=".72"/>
-  <path d="M27.5 30.5 45.5 17.5 41 45 24 56.5Z" fill="#0A2034" fill-opacity=".78"/>
-  <path d="M7.5 18.5 27.5 30.5 28 7M27.5 30.5 45.5 17.5M27.5 30.5 24 56.5M27.5 30.5 41 45" stroke="#68DFFF" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" opacity=".82"/>
-  <path d="m27.5 24.5 7 6-7 7-7-7Z" fill="url(#energy)" stroke="#D2C7FF" stroke-width="1.2" filter="url(#glow)"/>
-  <path d="m49.5 24.5 7 7-7 7" stroke="url(#beam)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

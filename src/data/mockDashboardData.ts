@@ -15,20 +15,19 @@ const floors = [
   {
     id: '1F',
     zones: [
-      { id: 'A', x: 18, y: 68, width: 64, height: 46 },
-      { id: 'B', x: 104, y: 116, width: 56, height: 42, current: true },
-      { id: 'B', x: 18, y: 198, width: 64, height: 56 },
-      { id: 'C', x: 176, y: 58, width: 64, height: 40 },
-      { id: 'C', x: 176, y: 168, width: 64, height: 42 },
+      { id: 'CMP', x: 20, y: 26, width: 106, height: 120 },
+      { id: 'DIF', x: 134, y: 26, width: 106, height: 120, current: true },
+      { id: 'LIT', x: 20, y: 154, width: 106, height: 120 },
+      { id: 'ETC', x: 134, y: 154, width: 106, height: 120 },
     ],
   },
   {
     id: '3F',
     zones: [
-      { id: 'A', x: 28, y: 48, width: 64, height: 46 },
-      { id: 'B', x: 112, y: 88, width: 56, height: 42 },
-      { id: 'C', x: 176, y: 148, width: 64, height: 46 },
-      { id: 'D', x: 28, y: 188, width: 72, height: 52 },
+      { id: 'CMP', x: 20, y: 26, width: 106, height: 120 },
+      { id: 'DIF', x: 134, y: 26, width: 106, height: 120 },
+      { id: 'LIT', x: 20, y: 154, width: 106, height: 120 },
+      { id: 'ETC', x: 134, y: 154, width: 106, height: 120, current: true },
     ],
   },
 ]
@@ -58,8 +57,8 @@ const levels: Array<{ key: TranslationKey; color: DashboardCase['color'] }> = [
 ]
 
 const caseTimes = ['10:25:52', '09:58:23', '09:32:47', '08:46:05', '08:12:30']
-const spots = ['B1-086', 'A1-042', 'C2-118', 'B1-063', 'E1-009']
-const owners = ['张伟', '李强', '王磊', '陈晨', '赵敏']
+const spots = ['LIT-086', 'CMP-042', 'LIT-118', 'DIF-063', 'ETC-009']
+const owners = ['YZU', 'YZU', 'YZU', 'YZU', 'YZU']
 
 function makeCases(moduleCode: string, currentPoint: string, eventKeys: TranslationKey[]): DashboardCase[] {
   return Array.from({ length: 5 }, (_, index) => ({
@@ -117,7 +116,7 @@ function dashboard(
   return {
     moduleId,
     timestamp,
-    media: { deviceId: 'GL-01', area: areaKey, areaKey, speed: '0.38', directionKey: 'status.forward', modeKey: 'status.autoInspection' },
+    media: { deviceId: 'AN0111', area: areaKey, areaKey, speed: '0.38', directionKey: 'status.forward', modeKey: 'status.autoInspection' },
     map: { floors, defaultFloor: '1F', currentPoint },
     logs,
     metrics: values,
@@ -129,7 +128,7 @@ function dashboard(
       conclusions: ['resolution.resolved', 'resolution.falseAlarm'],
       defaultConclusion: 'resolution.resolved',
       notes: 'resolution.defaultNotes',
-      operator: '张伟',
+      operator: 'YZU',
       resolvedAt: '2026-08-12 10:32:44',
     },
     systemStatusKeys: ['system.sensorNormal', 'system.videoRealtime', 'system.syncNow'],
@@ -138,33 +137,33 @@ function dashboard(
 
 export const mockDashboardData: Record<ModuleId, DashboardViewModel> = {
   lineClamp: dashboard(
-    'lineClamp', 'B1-042',
+    'lineClamp', 'DIF-042',
     metrics([
-      ['metrics.deviceStatus', 'common.normal'], ['metrics.speed', '0.38', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'B1-042'],
+      ['metrics.deviceStatus', 'common.normal'], ['metrics.speed', '0.38', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'DIF-042'],
       ['metrics.clampCount', '24'], ['metrics.anomalyCount', '1', undefined, 'warning'], ['metrics.confidence', '96', '%'], ['metrics.alertLevel', 'common.orange', undefined, 'warning'],
     ]),
     'trend.deformationConfidence', '%',
     series([['trend.deformationConfidence', 'primary', [78, 81, 84, 88, 93, 96]], ['trend.threshold', 'threshold', [90, 90, 90, 90, 90, 90]]]),
     ['event.clampDeformed', 'event.clampLoose', 'event.clampMissing'],
-    overlay('line-clamp', 'overlay.lineClamp', 'overlay.confidence', [['overlay.deformation', '8.4', 'mm'], ['overlay.confidence', '96', '%'], ['metrics.point', 'B1-042']]),
+    overlay('line-clamp', 'overlay.lineClamp', 'overlay.confidence', [['overlay.deformation', '8.4', 'mm'], ['overlay.confidence', '96', '%'], ['metrics.point', 'DIF-042']]),
     'areas.lineClamp',
   ),
   lineProtrusion: dashboard(
-    'lineProtrusion', 'C1-118',
+    'lineProtrusion', 'LIT-118',
     metrics([
-      ['metrics.inspectionStatus', 'common.inspecting'], ['metrics.speed', '0.32', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'C1-118'],
+      ['metrics.inspectionStatus', 'common.inspecting'], ['metrics.speed', '0.32', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'LIT-118'],
       ['metrics.protrusion', '18.6', 'mm', 'warning'], ['metrics.threshold', '15', 'mm'], ['metrics.confidence', '94', '%'], ['metrics.eventLevel', 'common.orange', undefined, 'warning'],
     ]),
     'trend.protrusion', 'mm',
     series([['trend.protrusion', 'primary', [8, 10, 11, 13, 17, 18.6]], ['trend.threshold', 'threshold', [15, 15, 15, 15, 15, 15]]]),
     ['event.lineProtrusion', 'event.sheathBulge', 'event.edgeAnomaly'],
-    overlay('line-protrusion', 'overlay.lineProtrusion', 'overlay.confidence', [['overlay.protrusion', '18.6', 'mm'], ['overlay.confidence', '94', '%'], ['metrics.point', 'C1-118']]),
+    overlay('line-protrusion', 'overlay.lineProtrusion', 'overlay.confidence', [['overlay.protrusion', '18.6', 'mm'], ['overlay.confidence', '94', '%'], ['metrics.point', 'LIT-118']]),
     'areas.lineProtrusion',
   ),
   magneticPlate: dashboard(
-    'magneticPlate', 'A1-063',
+    'magneticPlate', 'CMP-063',
     metrics([
-      ['metrics.deviceStatus', 'common.normal'], ['metrics.speed', '0.35', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'A1-063'],
+      ['metrics.deviceStatus', 'common.normal'], ['metrics.speed', '0.35', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'CMP-063'],
       ['metrics.plateTemperature', '42.8', '°C'], ['metrics.offset', '4.2', 'mm', 'warning'], ['metrics.integrity', '91', '%'], ['metrics.alertLevel', 'common.yellow', undefined, 'warning'],
     ]),
     'trend.plateOffset', 'mm',
@@ -174,21 +173,21 @@ export const mockDashboardData: Record<ModuleId, DashboardViewModel> = {
     'areas.magneticPlate',
   ),
   infraredTemperature: dashboard(
-    'infraredTemperature', 'E1-009',
+    'infraredTemperature', 'ETC-009',
     metrics([
-      ['metrics.inspectionStatus', 'common.inspecting'], ['metrics.deviceId', 'GL-01'], ['metrics.floor', '1F'], ['metrics.point', 'E1-009'],
+      ['metrics.inspectionStatus', 'common.inspecting'], ['metrics.deviceId', 'AN0111'], ['metrics.floor', '1F'], ['metrics.point', 'ETC-009'],
       ['metrics.currentTemperature', '38.6', '°C', 'danger'], ['metrics.threshold', '37.3', '°C'], ['metrics.temperatureRise', '1.8', '°C'], ['metrics.eventLevel', 'common.red', undefined, 'danger'],
     ]),
     'trend.temperature', '°C',
     series([['trend.temperature', 'primary', [36.8, 37.0, 37.2, 37.5, 38.1, 38.6]], ['trend.threshold', 'threshold', [37.3, 37.3, 37.3, 37.3, 37.3, 37.3]]]),
     ['event.temperatureHigh', 'event.temperatureRise', 'event.hotspot'],
-    overlay('infrared', 'overlay.infrared', 'overlay.temperature', [['overlay.temperature', '38.6', '°C'], ['metrics.threshold', '37.3', '°C'], ['metrics.point', 'E1-009']]),
+    overlay('infrared', 'overlay.infrared', 'overlay.temperature', [['overlay.temperature', '38.6', '°C'], ['metrics.threshold', '37.3', '°C'], ['metrics.point', 'ETC-009']]),
     'areas.infraredTemperature',
   ),
   lifeSensing: dashboard(
-    'lifeSensing', 'B1-086',
+    'lifeSensing', 'LIT-086',
     metrics([
-      ['metrics.frontDistance', '12.6', 'm'], ['metrics.speed', '0.38', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'B1-086'],
+      ['metrics.frontDistance', '12.6', 'm'], ['metrics.speed', '0.38', 'm/s'], ['metrics.floor', '1F'], ['metrics.point', 'LIT-086'],
       ['metrics.breathing', '10', 'bpm', 'normal', true], ['metrics.heartRate', '48', 'bpm', 'normal', true], ['metrics.lifeStatus', 'common.abnormal', undefined, 'warning'], ['metrics.eventLevel', 'common.red', undefined, 'danger'],
     ]),
     'trend.breathing', 'bpm',

@@ -11,6 +11,7 @@ test('provides a complete dashboard view model for every module', async () => {
     assert.equal(dashboard.moduleId, id)
     assert.equal(dashboard.overlay.kind, moduleDefinitions[id].overlay)
     assert.deepEqual(dashboard.map.floors.map((floor) => floor.id), ['1F', '3F'])
+    assert.deepEqual(dashboard.map.floors[0].zones.map((zone) => zone.id), ['CMP', 'DIF', 'LIT', 'ETC'])
     assert.ok(dashboard.map.floors.some((floor) => floor.id === dashboard.map.defaultFloor))
     assert.ok(dashboard.map.currentPoint.length > 0)
     assert.ok(dashboard.logs.length >= 6)
@@ -20,7 +21,9 @@ test('provides a complete dashboard view model for every module', async () => {
     assert.ok(dashboard.cases.some((item) => item.id === dashboard.defaultCaseId))
     assert.equal(dashboard.cases[0].spot, dashboard.map.currentPoint)
     assert.ok(dashboard.resolution.conclusions.length >= 2)
-    assert.ok(dashboard.resolution.operator.length > 0)
+    assert.equal(dashboard.media.deviceId, 'AN0111')
+    assert.equal(dashboard.resolution.operator, 'YZU')
+    assert.ok(dashboard.cases.every((item) => item.owner === 'YZU'))
   }
 })
 
