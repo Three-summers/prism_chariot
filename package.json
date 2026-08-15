@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "release:windows": "bash scripts/release-windows-offline.sh",
     "preview": "vite preview",
     "test": "node --test tests/*.test.ts",
     "test:scale": "node --test tests/ui-scale.test.ts"
