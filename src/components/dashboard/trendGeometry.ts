@@ -43,6 +43,10 @@ export function formatTrendTime(seconds: number): string {
   return `${String(minutes).padStart(2, '0')}:${remainder.toFixed(1).padStart(4, '0')}`
 }
 
+export function formatTrendClock(date: Date): string {
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`
+}
+
 export function formatTrendValue(value: number): string {
   return Number(value.toFixed(2)).toString()
 }

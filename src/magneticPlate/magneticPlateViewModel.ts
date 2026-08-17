@@ -1,6 +1,7 @@
 import type { TranslationKey } from '../i18n/resources.ts'
 import type { DashboardCase, DashboardViewModel, DetectionGap, MetricValue } from '../modules/types.ts'
 import { MAGNETIC_PLATE_CONFIG } from './detector.ts'
+import { formatTrendClock } from '../components/dashboard/trendGeometry.ts'
 import type { MagneticPlateDetectionResult } from './types.ts'
 
 export function neutralMagneticPlateDashboard(base: DashboardViewModel): DashboardViewModel {
@@ -13,6 +14,7 @@ export function neutralMagneticPlateDashboard(base: DashboardViewModel): Dashboa
       ...base.trend,
       titleKey: 'trend.gapDistance',
       unit: 'px',
+      labels: base.trend.labels.map(() => ''),
       series: base.trend.series.map((series, index) => ({
         ...series,
         labelKey: index === 0 ? 'trend.gapDistance' : 'trend.threshold',
@@ -57,6 +59,9 @@ export function mapMagneticPlateResult(
       ...baseViewModel.trend,
       titleKey: 'trend.gapDistance',
       unit: 'px',
+      labels: baseViewModel.trend.labels.map((_, index, all) => (
+        index === all.length - 1 ? formatTrendClock(new Date()) : ''
+      )),
       series: baseViewModel.trend.series.map((series, index) => ({
         ...series,
         labelKey: index === 0 ? 'trend.gapDistance' : 'trend.threshold',

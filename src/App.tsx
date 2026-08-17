@@ -10,6 +10,7 @@ import { LineClampBatchController, type DirectoryImage, type LineClampBatchStatu
 import { imagesFromFileList, pickImageDirectory } from './lineClamp/directoryPicker'
 import { lineClampDataProvider, type LineClampDashboardResult } from './lineClamp/lineClampDataProvider'
 import { magneticPlateDataProvider } from './magneticPlate/magneticPlateDataProvider'
+import { infraredTemperatureDataProvider } from './infraredTemperature/infraredTemperatureDataProvider'
 import { LineProtrusionCaseTracker } from './lineProtrusion/caseTracker'
 import { lineProtrusionDataProvider } from './lineProtrusion/lineProtrusionDataProvider'
 import { mapLineProtrusionResult } from './lineProtrusion/lineProtrusionViewModel'
@@ -86,7 +87,9 @@ function DashboardApp() {
         ? lineProtrusionDataProvider.getDashboard()
         : activeModule === 'magneticPlate'
           ? magneticPlateDataProvider.getDashboard()
-          : mockDashboardDataProvider.getDashboard(activeModule)
+          : activeModule === 'infraredTemperature'
+            ? infraredTemperatureDataProvider.getDashboard()
+            : mockDashboardDataProvider.getDashboard(activeModule)
     request.then((data) => { if (!cancelled) setViewModel(data) }).catch((error: unknown) => {
       console.error('Dashboard data load failed', error)
       if (!cancelled) setLoadError(true)

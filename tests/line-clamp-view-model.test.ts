@@ -32,6 +32,16 @@ test('maps an OK detection into the line-clamp dashboard contract', async () => 
   assert.equal(mapped.metrics.find((item) => item.labelKey === 'metrics.alertLevel')?.tone, 'success')
 })
 
+test('stamps the trend x-axis with the real detection time instead of mock labels', async () => {
+  const base = await mockDashboardDataProvider.getDashboard('lineClamp')
+  const mapped = mapLineClampResult(result(), base)
+
+  assert.equal(mapped.trend.labels.length, base.trend.labels.length)
+  assert.ok(mapped.trend.labels.slice(0, -1).every((label) => label === ''))
+  assert.match(mapped.trend.labels.at(-1) ?? '', /^\d{2}:\d{2}:\d{2}$/)
+  assert.notEqual(mapped.trend.labels.at(-1), base.trend.labels.at(-1))
+})
+
 test('maps missing screw and tilt into warning metrics and event semantics', async () => {
   const base = await mockDashboardDataProvider.getDashboard('lineClamp')
   const mapped = mapLineClampResult(result({ status: 'tilted-no-screw', hasScrew: false, isTilted: true, angleDeg: 8.2, screwContrast: -3.5 }), base)

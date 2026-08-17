@@ -12,7 +12,7 @@ readonly CACHE_DIR="${REPO_ROOT}/.cache/delivery"
 readonly TEMPLATE_DIR="${REPO_ROOT}/delivery/windows-offline"
 readonly CADDY_ARCHIVE="${CACHE_DIR}/${CADDY_ARCHIVE_NAME}"
 
-for command_name in node npm git curl unzip zip sha256sum; do
+for command_name in node npm git curl unzip zip python3 sha256sum; do
   if ! command -v "${command_name}" >/dev/null 2>&1; then
     echo "Required command is missing: ${command_name}" >&2
     exit 1
@@ -87,9 +87,25 @@ echo "[5/7] Generating internal checksums"
 )
 
 echo "[6/7] Creating and verifying ZIP"
+# Python's zipfile sets the UTF-8 flag (EFS) on non-ASCII entry names, so
+# Windows Explorer decodes Chinese filenames correctly. Info-ZIP's `zip`
+# (3.0) stores raw UTF-8 bytes without that flag, which Windows then reads
+# as GBK and shows mojibake.
 (
   cd "${STAGE_ROOT}"
-  zip -rq -6 "${STAGE_ZIP}" "${PACKAGE_NAME}"
+  python3 - "${STAGE_ZIP}" "${PACKAGE_NAME}" <<'PY'
+import os
+import sys
+import zipfile
+
+zip_path, package_dir = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+    for root, directories, files in os.walk(package_dir):
+        for directory in directories:
+            archive.write(os.path.join(root, directory))
+        for file_name in files:
+            archive.write(os.path.join(root, file_name))
+PY
 )
 unzip -tq "${STAGE_ZIP}" >/dev/null
 

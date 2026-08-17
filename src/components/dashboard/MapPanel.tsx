@@ -25,7 +25,7 @@ function FactoryMap({ floor }: { floor: MapFloor }) {
       <path id={`track-${floor.id}`} className="route-track" d={route} />
       <path className="route-flow" d={route} />
       <path className="arrow" d="M42 82H30m12 0-7-6m7 6-7 6" />
-      <g className="vehicle"><circle r="12" className="vehicle-pulse" /><circle r="4.5" className="vehicle-dot" /><rect className="vehicle-label" x="-18" y="14" width="36" height="14" rx="2" /><text x="0" y="24" textAnchor="middle">GL-01</text><animateMotion dur="18s" repeatCount="indefinite" rotate="0"><mpath href={`#track-${floor.id}`} /></animateMotion></g>
+      <g className="vehicle"><circle r="12" className="vehicle-pulse" /><circle r="4.5" className="vehicle-dot" /><rect className="vehicle-label" x="-20" y="14" width="40" height="14" rx="2" /><text x="0" y="24" textAnchor="middle">AN0111</text><animateMotion dur="18s" repeatCount="indefinite" rotate="0"><mpath href={`#track-${floor.id}`} /></animateMotion></g>
     </svg>
   )
 }

@@ -6,6 +6,7 @@ import type {
   OverlayStat,
 } from '../modules/types.ts'
 import type { TranslationKey } from '../i18n/resources.ts'
+import { formatTrendClock } from '../components/dashboard/trendGeometry.ts'
 import type { LineClampDetectionResult } from './types.ts'
 
 /**
@@ -39,6 +40,9 @@ export function mapLineClampResult(
     ...baseViewModel.trend,
     titleKey: 'trend.clampAngle',
     unit: '°',
+    labels: baseViewModel.trend.labels.map((_, index, all) => (
+      index === all.length - 1 ? formatTrendClock(new Date()) : ''
+    )),
     series: baseViewModel.trend.series.map((series, index) => {
       if (index !== 0 || series.values.length === 0) return { ...series, values: [...series.values] }
       const values = [...series.values]

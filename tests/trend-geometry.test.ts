@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  formatTrendClock,
   formatTrendTime,
   makeTrendPoints,
   makeTrendScale,
@@ -42,4 +43,8 @@ test('formats sub-second video positions and keeps x-axis labels sparse', () => 
       { index: 5, label: '00:05' },
     ],
   )
+})
+
+test('formats wall-clock hours, minutes and seconds for live trend labels', () => {
+  assert.equal(formatTrendClock(new Date(2026, 7, 17, 14, 5, 9)), '14:05:09')
 })
