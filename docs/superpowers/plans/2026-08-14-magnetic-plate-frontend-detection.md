@@ -111,4 +111,4 @@ Use CSS-positioned overlay elements inside the existing image frame. Give normal
 
 - [ ] **Step 5: Start Vite and verify at 1600x900 in Chrome**
 
-Open magnetic plate inspection, select `docs/images/磁底板翘起.jpg`, confirm `warped`, two left target segments, one real CASE, ignored right reflection, aligned overlay, bilingual copy, and no overlap.
+Open magnetic plate inspection, select `docs/images/磁极板翘起.jpg`, confirm `warped`, two left target segments, one real CASE, ignored right reflection, aligned overlay, bilingual copy, and no overlap.

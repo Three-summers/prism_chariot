@@ -1,11 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <title>光棱战车棱镜 Logo</title>
-  <desc>简洁的三角棱镜与三道折射光线</desc>
-  <path d="M7 51 27 13l20 38Z" fill="#0B2635" stroke="#79E9F7" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M27 13v38M7 51h40" stroke="#30BDD8" stroke-width="1.5" opacity=".72"/>
-  <g stroke-linecap="round" stroke-width="3">
-    <path d="M47 42 61 33" stroke="#78EAF7"/>
-    <path d="M47 46h14" stroke="#43B8FF"/>
-    <path d="M47 50l14 9" stroke="#A77BFF"/>
-  </g>
+  <title>光棱科技 Logo</title>
+  <desc>搭载三棱镜的轨道小车与三束折射光</desc>
+  <defs>
+    <linearGradient id="prism" x1="12" y1="12" x2="48" y2="49" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#20E4E8"/>
+      <stop offset=".52" stop-color="#2D91F4"/>
+      <stop offset="1" stop-color="#915AF2"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="7" y1="58" x2="55" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#21BDF4"/>
+      <stop offset="1" stop-color="#7359F5"/>
+    </linearGradient>
+  </defs>
+  <path d="M5 26.5h11" stroke="#DFFFFF" stroke-width="2" stroke-linecap="round"/>
+  <path d="M27.5 8.2 4.5 48h46L27.5 8.2Z" fill="url(#prism)" fill-opacity=".72" stroke="#63F3F5" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M27.5 8.2V48M4.5 48l23-21m23 21-23-21M11 36.5h33" stroke="#C8FCFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <circle cx="27.5" cy="27" r="2.6" fill="#FFF"/>
+  <path d="m30 29.2 27.5-8" stroke="#57F1F0" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M30.5 30H58" stroke="#54A8FF" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="m30 30.8 26.5 9.2" stroke="#D44FF4" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M7 51h41l4 4H3l4-4Z" fill="#20D9EA" fill-opacity=".35" stroke="#55F2F2" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="10" cy="54.8" r="2.8" fill="#25DDEB"/>
+  <circle cx="46" cy="54.8" r="2.8" fill="#9C56ED"/>
+  <path d="M5 59h18l3-3h8l3 3h20" stroke="url(#rail)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

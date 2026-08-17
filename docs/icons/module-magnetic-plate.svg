@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <title>磁底板识别</title>
-  <desc>具有翘曲间隙检测标记的分层磁底板</desc>
+  <title>磁极板识别</title>
+  <desc>具有翘曲间隙检测标记的分层磁极板</desc>
   <g stroke="#27B7FF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
     <path d="m10 24 22-12 22 12-22 12-22-12Z" fill="#27B7FF" fill-opacity=".08"/>
     <path d="M10 24v20l22 12 22-12V24M32 36v20"/>

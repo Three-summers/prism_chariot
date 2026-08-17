@@ -31,7 +31,7 @@ The processing pipeline is:
 8. Classify two significant horizontal components separated by a spatial gap or center-line jump as `warped`.
 9. Return `failed` when no trustworthy target stripe can be found.
 
-The right-side V-shaped and vertical highlights in `docs/images/磁底板翘起.jpg` are excluded primarily by the ROI, then by horizontal aspect-ratio and coverage filters. Brightness alone never determines the result.
+The right-side V-shaped and vertical highlights in `docs/images/磁极板翘起.jpg` are excluded primarily by the ROI, then by horizontal aspect-ratio and coverage filters. Brightness alone never determines the result.
 
 ## Data Contracts
 
@@ -78,4 +78,4 @@ Pure detector tests use synthetic images for:
 
 Provider tests cover browser dependency injection and object URL cleanup. View-model tests cover metrics, trend, overlay, CASE creation, and failure mapping. The production build and complete test suite must pass.
 
-Chrome verification at 1600x900 uses `docs/images/磁底板翘起.jpg` to confirm that the left target is classified as warped, the right reflection is ignored, overlay geometry aligns with the source image, bilingual labels render, and no dashboard elements overlap.
+Chrome verification at 1600x900 uses `docs/images/磁极板翘起.jpg` to confirm that the left target is classified as warped, the right reflection is ignored, overlay geometry aligns with the source image, bilingual labels render, and no dashboard elements overlap.
